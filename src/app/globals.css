@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #0a0e27;
+  --foreground: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: 'Geist', 'Geist Mono', sans-serif;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #00D4FF 0%, #1E88E5 100%);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #33E0FF 0%, #42A5F5 100%);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-color: linear-gradient(135deg, #00D4FF 0%, #1E88E5 100%) transparent;
+  scrollbar-width: thin;
+}
+
+/* Selection styling */
+::selection {
+  background: rgba(0, 212, 255, 0.3);
+  color: #00D4FF;
+}
+
+/* Smooth transitions */
+button, a, input, textarea {
+  transition: all 0.3s ease;
+}
+
+/* Typography utilities */
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+p {
+  color: inherit;
+  line-height: 1.7;
+}
+
+/* Links */
+a {
+  color: #00D4FF;
+  text-decoration: none;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+/* Remove default focus outline for better styling */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 2px solid #00D4FF;
+  outline-offset: 2px;
+}
+
