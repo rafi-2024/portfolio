@@ -137,7 +137,7 @@ export const ContactSection: React.FC = () => {
           <Typography
             variant="h6"
             sx={{
-              color: '#00D4FF',
+              color: theme.palette.primary.main,
               fontWeight: 700,
               textTransform: 'uppercase',
               letterSpacing: '0.15em',
@@ -152,7 +152,7 @@ export const ContactSection: React.FC = () => {
               fontSize: isMobile ? '2.5rem' : '3rem',
               fontWeight: 800,
               mb: 2,
-              color: '#FFFFFF',
+              color: theme.palette.text.primary,
             }}
           >
             Let&apos;s Build Something Amazing
@@ -161,7 +161,7 @@ export const ContactSection: React.FC = () => {
             variant="body1"
             sx={{
               fontSize: '1.1rem',
-              color: '#B0BEC5',
+              color: theme.palette.text.secondary,
               maxWidth: '600px',
               mx: 'auto',
             }}
@@ -209,7 +209,7 @@ export const ContactSection: React.FC = () => {
                   <CardContent>
                     <Box
                       sx={{
-                        color: '#00D4FF',
+                        color: theme.palette.primary.main,
                         mb: 2,
                         display: 'flex',
                         alignItems: 'center',
@@ -217,7 +217,7 @@ export const ContactSection: React.FC = () => {
                         width: '60px',
                         height: '60px',
                         borderRadius: '12px',
-                        background: 'rgba(0, 212, 255, 0.1)',
+                        background: `rgba(${theme.palette.primary.main === '#7C3AED' ? '124, 58, 237' : '0, 212, 255'}, 0.1)`,
                       }}
                     >
                       {info.icon}
@@ -227,7 +227,7 @@ export const ContactSection: React.FC = () => {
                       sx={{
                         fontWeight: 700,
                         mb: 0.5,
-                        color: '#FFFFFF',
+                        color: theme.palette.text.primary,
                       }}
                     >
                       {info.label}
@@ -235,7 +235,7 @@ export const ContactSection: React.FC = () => {
                     <Typography
                       variant="body2"
                       sx={{
-                        color: '#B0BEC5',
+                        color: theme.palette.text.secondary,
                         fontSize: '1rem',
                       }}
                     >
@@ -264,10 +264,10 @@ export const ContactSection: React.FC = () => {
                   fullWidth
                   startIcon={<GitHubIcon />}
                   sx={{
-                    borderColor: '#00D4FF',
-                    color: '#00D4FF',
+                    borderColor: theme.palette.primary.main,
+                    color: theme.palette.primary.main,
                     '&:hover': {
-                      backgroundColor: 'rgba(0, 212, 255, 0.1)',
+                      backgroundColor: `rgba(${theme.palette.primary.main === '#7C3AED' ? '124, 58, 237' : '0, 212, 255'}, 0.1)`,
                     },
                   }}
                 >
@@ -282,10 +282,10 @@ export const ContactSection: React.FC = () => {
                   fullWidth
                   startIcon={<LinkedInIcon />}
                   sx={{
-                    borderColor: '#00D4FF',
-                    color: '#00D4FF',
+                    borderColor: theme.palette.primary.main,
+                    color: theme.palette.primary.main,
                     '&:hover': {
-                      backgroundColor: 'rgba(0, 212, 255, 0.1)',
+                      backgroundColor: `rgba(${theme.palette.primary.main === '#7C3AED' ? '124, 58, 237' : '0, 212, 255'}, 0.1)`,
                     },
                   }}
                 >
@@ -348,27 +348,27 @@ export const ContactSection: React.FC = () => {
                         variant="outlined"
                         sx={{
                           '& .MuiOutlinedInput-root': {
-                            color: '#FFFFFF',
+                            color: theme.palette.text.primary,
                             '& fieldset': {
-                              borderColor: 'rgba(0, 212, 255, 0.3)',
+                              borderColor: `rgba(${theme.palette.primary.main === '#7C3AED' ? '124, 58, 237' : '0, 212, 255'}, 0.3)`,
                             },
                             '&:hover fieldset': {
-                              borderColor: 'rgba(0, 212, 255, 0.6)',
+                              borderColor: `rgba(${theme.palette.primary.main === '#7C3AED' ? '124, 58, 237' : '0, 212, 255'}, 0.6)`,
                             },
                             '&.Mui-focused fieldset': {
-                              borderColor: '#00D4FF',
+                              borderColor: theme.palette.primary.main,
                             },
                           },
                           '& .MuiInputBase-input::placeholder': {
-                            color: '#666',
+                            color: theme.palette.text.secondary,
                             opacity: 1,
                           },
                         }}
                         InputLabelProps={{
                           sx: {
-                            color: '#B0BEC5',
+                            color: theme.palette.text.secondary,
                             '&.Mui-focused': {
-                              color: '#00D4FF',
+                              color: theme.palette.primary.main,
                             },
                           },
                         }}
@@ -385,23 +385,23 @@ export const ContactSection: React.FC = () => {
                         variant="outlined"
                         sx={{
                           '& .MuiOutlinedInput-root': {
-                            color: '#FFFFFF',
+                            color: theme.palette.text.primary,
                             '& fieldset': {
-                              borderColor: 'rgba(0, 212, 255, 0.3)',
+                              borderColor: `rgba(${theme.palette.primary.main === '#7C3AED' ? '124, 58, 237' : '0, 212, 255'}, 0.3)`,
                             },
                             '&:hover fieldset': {
-                              borderColor: 'rgba(0, 212, 255, 0.6)',
+                              borderColor: `rgba(${theme.palette.primary.main === '#7C3AED' ? '124, 58, 237' : '0, 212, 255'}, 0.6)`,
                             },
                             '&.Mui-focused fieldset': {
-                              borderColor: '#00D4FF',
+                              borderColor: theme.palette.primary.main,
                             },
                           },
                         }}
                         InputLabelProps={{
                           sx: {
-                            color: '#B0BEC5',
+                            color: theme.palette.text.secondary,
                             '&.Mui-focused': {
-                              color: '#00D4FF',
+                              color: theme.palette.primary.main,
                             },
                           },
                         }}
@@ -417,23 +417,23 @@ export const ContactSection: React.FC = () => {
                         variant="outlined"
                         sx={{
                           '& .MuiOutlinedInput-root': {
-                            color: '#FFFFFF',
+                            color: theme.palette.text.primary,
                             '& fieldset': {
-                              borderColor: 'rgba(0, 212, 255, 0.3)',
+                              borderColor: `rgba(${theme.palette.primary.main === '#7C3AED' ? '124, 58, 237' : '0, 212, 255'}, 0.3)`,
                             },
                             '&:hover fieldset': {
-                              borderColor: 'rgba(0, 212, 255, 0.6)',
+                              borderColor: `rgba(${theme.palette.primary.main === '#7C3AED' ? '124, 58, 237' : '0, 212, 255'}, 0.6)`,
                             },
                             '&.Mui-focused fieldset': {
-                              borderColor: '#00D4FF',
+                              borderColor: theme.palette.primary.main,
                             },
                           },
                         }}
                         InputLabelProps={{
                           sx: {
-                            color: '#B0BEC5',
+                            color: theme.palette.text.secondary,
                             '&.Mui-focused': {
-                              color: '#00D4FF',
+                              color: theme.palette.primary.main,
                             },
                           },
                         }}
@@ -451,23 +451,23 @@ export const ContactSection: React.FC = () => {
                         variant="outlined"
                         sx={{
                           '& .MuiOutlinedInput-root': {
-                            color: '#FFFFFF',
+                            color: theme.palette.text.primary,
                             '& fieldset': {
-                              borderColor: 'rgba(0, 212, 255, 0.3)',
+                              borderColor: `rgba(${theme.palette.primary.main === '#7C3AED' ? '124, 58, 237' : '0, 212, 255'}, 0.3)`,
                             },
                             '&:hover fieldset': {
-                              borderColor: 'rgba(0, 212, 255, 0.6)',
+                              borderColor: `rgba(${theme.palette.primary.main === '#7C3AED' ? '124, 58, 237' : '0, 212, 255'}, 0.6)`,
                             },
                             '&.Mui-focused fieldset': {
-                              borderColor: '#00D4FF',
+                              borderColor: theme.palette.primary.main,
                             },
                           },
                         }}
                         InputLabelProps={{
                           sx: {
-                            color: '#B0BEC5',
+                            color: theme.palette.text.secondary,
                             '&.Mui-focused': {
-                              color: '#00D4FF',
+                              color: theme.palette.primary.main,
                             },
                           },
                         }}

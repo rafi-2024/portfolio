@@ -95,7 +95,7 @@ export const SkillsSection: React.FC = () => {
           <Typography
             variant="h6"
             sx={{
-              color: '#00D4FF',
+              color: theme.palette.primary.main,
               fontWeight: 700,
               textTransform: 'uppercase',
               letterSpacing: '0.15em',
@@ -110,7 +110,7 @@ export const SkillsSection: React.FC = () => {
               fontSize: isMobile ? '2.5rem' : '3rem',
               fontWeight: 800,
               mb: 2,
-              color: '#FFFFFF',
+              color: theme.palette.text.primary,
             }}
           >
             Skills & Technologies
@@ -119,7 +119,7 @@ export const SkillsSection: React.FC = () => {
             variant="body1"
             sx={{
               fontSize: '1.1rem',
-              color: '#B0BEC5',
+              color: theme.palette.text.secondary,
               maxWidth: '600px',
               mx: 'auto',
             }}
@@ -154,7 +154,7 @@ export const SkillsSection: React.FC = () => {
                 <CardContent>
                   <Box
                     sx={{
-                      color: '#00D4FF',
+                      color: theme.palette.primary.main,
                       mb: 2,
                       display: 'flex',
                       alignItems: 'center',
@@ -162,7 +162,7 @@ export const SkillsSection: React.FC = () => {
                       width: '60px',
                       height: '60px',
                       borderRadius: '12px',
-                      background: 'rgba(0, 212, 255, 0.1)',
+                      background: `rgba(${theme.palette.primary.main === '#7C3AED' ? '124, 58, 237' : '0, 212, 255'}, 0.1)`,
                     }}
                   >
                     {category.icon}
@@ -175,7 +175,7 @@ export const SkillsSection: React.FC = () => {
                   <Typography
                     variant="body2"
                     sx={{
-                      color: '#B0BEC5',
+                      color: theme.palette.text.secondary,
                       mb: 3,
                       minHeight: '40px',
                     }}
@@ -191,8 +191,8 @@ export const SkillsSection: React.FC = () => {
                         variant="outlined"
                         size="small"
                         sx={{
-                          borderColor: '#00D4FF',
-                          color: '#00D4FF',
+                          borderColor: theme.palette.primary.main,
+                          color: theme.palette.primary.main,
                           fontSize: '0.85rem',
                           height: 'auto',
                           '& .MuiChip-label': {
@@ -216,7 +216,7 @@ export const SkillsSection: React.FC = () => {
             sx={{
               fontWeight: 700,
               mb: 4,
-              color: '#FFFFFF',
+              color: theme.palette.text.primary,
               textAlign: 'center',
             }}
           >
@@ -231,10 +231,10 @@ export const SkillsSection: React.FC = () => {
             }}
           >
             {[
-              { label: 'Frontend Development', level: 95, color: '#00D4FF' },
-              { label: 'Backend Development', level: 90, color: '#1E88E5' },
-              { label: 'Database Design', level: 85, color: '#4CAF50' },
-              { label: 'DevOps & Deployment', level: 80, color: '#FF9800' },
+              { label: 'Frontend Development', level: 95, color: theme.palette.primary.main },
+              { label: 'Backend Development', level: 90, color: theme.palette.secondary.main },
+              { label: 'Database Design', level: 85, color: theme.palette.success.main },
+              { label: 'DevOps & Deployment', level: 80, color: theme.palette.warning.main },
             ].map((item, idx) => (
               <div key={item.label}>
                 <Box>
@@ -256,7 +256,7 @@ export const SkillsSection: React.FC = () => {
                     sx={{
                       height: '8px',
                       borderRadius: '4px',
-                      background: 'rgba(255, 255, 255, 0.1)',
+                      background: `rgba(${theme.palette.text.primary === '#FFFFFF' ? '255, 255, 255' : '0, 0, 0'}, 0.1)`,
                       overflow: 'hidden',
                     }}
                   >

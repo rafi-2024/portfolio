@@ -115,7 +115,7 @@ export const ExperienceSection: React.FC = () => {
           <Typography
             variant="h6"
             sx={{
-              color: '#00D4FF',
+              color: theme.palette.primary.main,
               fontWeight: 700,
               textTransform: 'uppercase',
               letterSpacing: '0.15em',
@@ -130,7 +130,7 @@ export const ExperienceSection: React.FC = () => {
               fontSize: isMobile ? '2.5rem' : '3rem',
               fontWeight: 800,
               mb: 2,
-              color: '#FFFFFF',
+              color: theme.palette.text.primary,
             }}
           >
             Experience & Education
@@ -139,7 +139,7 @@ export const ExperienceSection: React.FC = () => {
             variant="body1"
             sx={{
               fontSize: '1.1rem',
-              color: '#B0BEC5',
+              color: theme.palette.text.secondary,
               maxWidth: '600px',
               mx: 'auto',
             }}
@@ -162,12 +162,12 @@ export const ExperienceSection: React.FC = () => {
               {!isMobile && (
                 <TimelineOppositeContent
                   sx={{
-                    color: '#B0BEC5',
+                    color: theme.palette.text.secondary,
                     fontSize: '0.9rem',
                     py: 1,
                   }}
                 >
-                  <Typography variant="body2" sx={{ fontWeight: 600, color: '#00D4FF' }}>
+                  <Typography variant="body2" sx={{ fontWeight: 600, color: theme.palette.primary.main }}>
                     {exp.period}
                   </Typography>
                 </TimelineOppositeContent>
@@ -180,7 +180,7 @@ export const ExperienceSection: React.FC = () => {
                       ? 'linear-gradient(135deg, #FF9800 0%, #F44336 100%)'
                       : exp.type === 'education'
                         ? 'linear-gradient(135deg, #4CAF50 0%, #81C784 100%)'
-                        : 'linear-gradient(135deg, #00D4FF 0%, #1E88E5 100%)',
+                        : `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
                     width: 45,
                     height: 45,
                     display: 'flex',
@@ -195,7 +195,9 @@ export const ExperienceSection: React.FC = () => {
                 {index < experiences.length - 1 && (
                   <TimelineConnector
                     sx={{
-                      bgcolor: 'rgba(0, 212, 255, 0.2)',
+                      bgcolor: theme.palette.mode === 'dark'
+                        ? 'rgba(0, 212, 255, 0.2)'
+                        : 'rgba(124, 58, 237, 0.2)',
                     }}
                   />
                 )}
@@ -208,13 +210,17 @@ export const ExperienceSection: React.FC = () => {
                   whileInView="visible"
                   viewport={{ once: true }}
                   sx={{
-                    background: `linear-gradient(135deg, rgba(26, 40, 71, 0.9) 0%, rgba(15, 23, 41, 0.9) 100%)`,
+                    background: theme.palette.mode === 'dark'
+                      ? `linear-gradient(135deg, rgba(26, 40, 71, 0.9) 0%, rgba(15, 23, 41, 0.9) 100%)`
+                      : `linear-gradient(135deg, rgba(245, 240, 255, 0.9) 0%, rgba(237, 233, 254, 0.9) 100%)`,
                     border: `2px solid ${
                       exp.type === 'achievement'
                         ? 'rgba(255, 152, 0, 0.3)'
                         : exp.type === 'education'
                           ? 'rgba(76, 175, 80, 0.3)'
-                          : 'rgba(0, 212, 255, 0.3)'
+                          : theme.palette.mode === 'dark'
+                            ? 'rgba(0, 212, 255, 0.3)'
+                            : 'rgba(124, 58, 237, 0.3)'
                     }`,
                   }}
                 >
@@ -224,7 +230,7 @@ export const ExperienceSection: React.FC = () => {
                         variant="h6"
                         sx={{
                           fontWeight: 700,
-                          color: '#FFFFFF',
+                          color: theme.palette.text.primary,
                           mb: 0.5,
                         }}
                       >
@@ -233,7 +239,7 @@ export const ExperienceSection: React.FC = () => {
                       <Typography
                         variant="body2"
                         sx={{
-                          color: '#00D4FF',
+                          color: theme.palette.primary.main,
                           fontWeight: 600,
                         }}
                       >
@@ -245,7 +251,7 @@ export const ExperienceSection: React.FC = () => {
                       <Typography
                         variant="caption"
                         sx={{
-                          color: '#B0BEC5',
+                          color: theme.palette.text.secondary,
                           display: 'block',
                           mb: 1,
                         }}
@@ -257,7 +263,7 @@ export const ExperienceSection: React.FC = () => {
                     <Typography
                       variant="body2"
                       sx={{
-                        color: '#B0BEC5',
+                        color: theme.palette.text.secondary,
                         mb: 2,
                         lineHeight: 1.6,
                       }}
@@ -274,8 +280,8 @@ export const ExperienceSection: React.FC = () => {
                             variant="outlined"
                             size="small"
                             sx={{
-                              borderColor: '#00D4FF',
-                              color: '#00D4FF',
+                              borderColor: theme.palette.primary.main,
+                              color: theme.palette.primary.main,
                               fontSize: '0.8rem',
                               height: 'auto',
                               '& .MuiChip-label': {

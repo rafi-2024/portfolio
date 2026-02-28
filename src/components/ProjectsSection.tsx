@@ -121,7 +121,7 @@ export const ProjectsSection: React.FC = () => {
           <Typography
             variant="h6"
             sx={{
-              color: '#00D4FF',
+              color: theme.palette.primary.main,
               fontWeight: 700,
               textTransform: 'uppercase',
               letterSpacing: '0.15em',
@@ -136,7 +136,7 @@ export const ProjectsSection: React.FC = () => {
               fontSize: isMobile ? '2.5rem' : '3rem',
               fontWeight: 800,
               mb: 2,
-              color: '#FFFFFF',
+              color: theme.palette.text.primary,
             }}
           >
             Featured Projects
@@ -145,7 +145,7 @@ export const ProjectsSection: React.FC = () => {
             variant="body1"
             sx={{
               fontSize: '1.1rem',
-              color: '#B0BEC5',
+              color: theme.palette.text.secondary,
               maxWidth: '600px',
               mx: 'auto',
             }}
@@ -183,7 +183,7 @@ export const ProjectsSection: React.FC = () => {
                     sx={{
                       fontWeight: 700,
                       mb: 1,
-                      color: '#FFFFFF',
+                      color: theme.palette.text.primary,
                     }}
                   >
                     {project.title}
@@ -192,7 +192,7 @@ export const ProjectsSection: React.FC = () => {
                   <Typography
                     variant="body2"
                     sx={{
-                      color: '#B0BEC5',
+                      color: theme.palette.text.secondary,
                       mb: 2,
                       fontSize: '0.9rem',
                     }}
@@ -203,7 +203,7 @@ export const ProjectsSection: React.FC = () => {
                   <Typography
                     variant="body2"
                     sx={{
-                      color: '#999',
+                      color: theme.palette.text.secondary,
                       mb: 3,
                       lineHeight: 1.6,
                       fontSize: '0.85rem',
@@ -221,8 +221,10 @@ export const ProjectsSection: React.FC = () => {
                         variant="filled"
                         size="small"
                         sx={{
-                          backgroundColor: 'rgba(0, 212, 255, 0.15)',
-                          color: '#00D4FF',
+                          backgroundColor: theme.palette.mode === 'dark'
+                            ? 'rgba(0, 212, 255, 0.15)'
+                            : `rgba(${theme.palette.primary.main === '#7C3AED' ? '124, 58, 237' : '0, 212, 255'}, 0.12)`,
+                          color: theme.palette.primary.main,
                           fontSize: '0.75rem',
                           height: 'auto',
                           '& .MuiChip-label': {
@@ -236,7 +238,7 @@ export const ProjectsSection: React.FC = () => {
                       <Typography
                         variant="caption"
                         sx={{
-                          color: '#666',
+                          color: theme.palette.text.secondary,
                           alignSelf: 'center',
                         }}
                       >
@@ -246,13 +248,13 @@ export const ProjectsSection: React.FC = () => {
                   </Stack>
 
                   {project.metrics && (
-                    <Stack direction="row" spacing={2} sx={{ mt: 2, pt: 2, borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
+                    <Stack direction="row" spacing={2} sx={{ mt: 2, pt: 2, borderTop: `1px solid ${theme.palette.divider}` }}>
                       {project.metrics.map((metric, idx) => (
                         <Typography
                           key={idx}
                           variant="caption"
                           sx={{
-                            color: '#00D4FF',
+                            color: theme.palette.primary.main,
                             fontWeight: 600,
                             fontSize: '0.8rem',
                           }}
@@ -273,10 +275,12 @@ export const ProjectsSection: React.FC = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       sx={{
-                        color: '#00D4FF',
+                        color: theme.palette.primary.main,
                         fontSize: '0.9rem',
                         '&:hover': {
-                          backgroundColor: 'rgba(0, 212, 255, 0.1)',
+                          backgroundColor: theme.palette.mode === 'dark'
+                            ? 'rgba(0, 212, 255, 0.1)'
+                            : `rgba(${theme.palette.primary.main === '#7C3AED' ? '124, 58, 237' : '0, 212, 255'}, 0.08)`,
                         },
                       }}
                     >
@@ -291,10 +295,12 @@ export const ProjectsSection: React.FC = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       sx={{
-                        color: '#00D4FF',
+                        color: theme.palette.primary.main,
                         fontSize: '0.9rem',
                         '&:hover': {
-                          backgroundColor: 'rgba(0, 212, 255, 0.1)',
+                          backgroundColor: theme.palette.mode === 'dark'
+                            ? 'rgba(0, 212, 255, 0.1)'
+                            : `rgba(${theme.palette.primary.main === '#7C3AED' ? '124, 58, 237' : '0, 212, 255'}, 0.08)`,
                         },
                       }}
                     >

@@ -104,7 +104,7 @@ export const HeroSection: React.FC = () => {
                   display: 'block',
                   fontSize: '1.1rem',
                   fontWeight: 600,
-                  color: '#00D4FF',
+                  color: theme.palette.primary.main,
                   mb: 2,
                   textTransform: 'uppercase',
                   letterSpacing: '0.1em',
@@ -120,7 +120,7 @@ export const HeroSection: React.FC = () => {
                   fontWeight: 800,
                   lineHeight: 1.2,
                   mb: 2,
-                  background: 'linear-gradient(135deg, #00D4FF 0%, #1E88E5 100%)',
+                  background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
                   backgroundClip: 'text',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
@@ -134,7 +134,7 @@ export const HeroSection: React.FC = () => {
                 sx={{
                   fontSize: isMobile ? '1.3rem' : '1.8rem',
                   fontWeight: 500,
-                  color: '#B0BEC5',
+                  color: theme.palette.text.secondary,
                   mb: 3,
                   lineHeight: 1.4,
                 }}
@@ -146,7 +146,7 @@ export const HeroSection: React.FC = () => {
                 variants={itemVariants}
                 sx={{
                   fontSize: '1.05rem',
-                  color: '#B0BEC5',
+                  color: theme.palette.text.secondary,
                   mb: 4,
                   lineHeight: 1.8,
                   maxWidth: '500px',
@@ -201,7 +201,7 @@ export const HeroSection: React.FC = () => {
                   pt: 2,
                 }}
               >
-                <Typography sx={{ color: '#666', fontSize: '0.9rem' }}>
+                <Typography sx={{ color: theme.palette.text.secondary, fontSize: '0.9rem' }}>
                   Connect with me:
                 </Typography>
                 <Stack direction="row" spacing={1}>

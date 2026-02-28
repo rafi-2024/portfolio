@@ -46,9 +46,13 @@ export const Header: React.FC<HeaderProps> = ({ onThemeToggle, isDarkMode }) => 
       <AppBar
         position="fixed"
         sx={{
-          background: 'rgba(10, 14, 39, 0.8)',
+          background: isDarkMode 
+            ? 'rgba(10, 14, 39, 0.8)' 
+            : 'rgba(245, 243, 255, 0.8)',
           backdropFilter: 'blur(10px)',
-          borderBottom: '1px solid rgba(0, 212, 255, 0.2)',
+          borderBottom: isDarkMode
+            ? '1px solid rgba(0, 212, 255, 0.2)'
+            : '1px solid rgba(124, 58, 237, 0.2)',
           zIndex: 1200,
         }}
       >
@@ -58,7 +62,9 @@ export const Header: React.FC<HeaderProps> = ({ onThemeToggle, isDarkMode }) => 
               sx={{
                 fontSize: '1.5rem',
                 fontWeight: 700,
-                background: 'linear-gradient(135deg, #00D4FF 0%, #1E88E5 100%)',
+                background: isDarkMode
+                  ? 'linear-gradient(135deg, #00D4FF 0%, #1E88E5 100%)'
+                  : 'linear-gradient(135deg, #7C3AED 0%, #B794F6 100%)',
                 backgroundClip: 'text',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
@@ -75,7 +81,7 @@ export const Header: React.FC<HeaderProps> = ({ onThemeToggle, isDarkMode }) => 
                     key={item}
                     onClick={() => handleNavClick(item)}
                     sx={{
-                      color: 'inherit',
+                      color: theme.palette.text.primary,
                       fontSize: '0.95rem',
                       fontWeight: 500,
                       position: 'relative',
@@ -86,7 +92,9 @@ export const Header: React.FC<HeaderProps> = ({ onThemeToggle, isDarkMode }) => 
                         left: 0,
                         width: 0,
                         height: 2,
-                        background: 'linear-gradient(135deg, #00D4FF 0%, #1E88E5 100%)',
+                        background: isDarkMode
+                          ? 'linear-gradient(135deg, #00D4FF 0%, #1E88E5 100%)'
+                          : 'linear-gradient(135deg, #7C3AED 0%, #B794F6 100%)',
                         transition: 'width 0.3s ease',
                       },
                       '&:hover::after': {
@@ -140,19 +148,23 @@ export const Header: React.FC<HeaderProps> = ({ onThemeToggle, isDarkMode }) => 
         onClose={() => setMobileOpen(false)}
         sx={{
           '& .MuiDrawer-paper': {
-            backgroundColor: 'rgba(10, 14, 39, 0.95)',
+            backgroundColor: isDarkMode
+              ? 'rgba(10, 14, 39, 0.95)'
+              : 'rgba(245, 243, 255, 0.95)',
             backdropFilter: 'blur(10px)',
-            borderLeft: '1px solid rgba(0, 212, 255, 0.2)',
+            borderLeft: isDarkMode
+              ? '1px solid rgba(0, 212, 255, 0.2)'
+              : '1px solid rgba(124, 58, 237, 0.2)',
           },
         }}
       >
         <Box sx={{ width: 250, pt: 2 }}>
           <Box sx={{ display: 'flex', justifyContent: 'flex-end', px: 2, mb: 2 }}>
             <IconButton onClick={() => setMobileOpen(false)}>
-              <CloseIcon sx={{ color: '#00D4FF' }} />
+              <CloseIcon sx={{ color: isDarkMode ? '#00D4FF' : '#7C3AED' }} />
             </IconButton>
           </Box>
-          <Divider sx={{ borderColor: 'rgba(0, 212, 255, 0.2)' }} />
+          <Divider sx={{ borderColor: isDarkMode ? 'rgba(0, 212, 255, 0.2)' : 'rgba(124, 58, 237, 0.2)' }} />
           <List>
             {navItems.map((item) => (
               <ListItem key={item} disablePadding>
@@ -161,7 +173,9 @@ export const Header: React.FC<HeaderProps> = ({ onThemeToggle, isDarkMode }) => 
                   sx={{
                     color: 'inherit',
                     '&:hover': {
-                      backgroundColor: 'rgba(0, 212, 255, 0.1)',
+                      backgroundColor: isDarkMode
+                        ? 'rgba(0, 212, 255, 0.1)'
+                        : 'rgba(124, 58, 237, 0.08)',
                     },
                   }}
                 >
@@ -170,7 +184,7 @@ export const Header: React.FC<HeaderProps> = ({ onThemeToggle, isDarkMode }) => 
               </ListItem>
             ))}
           </List>
-          <Divider sx={{ borderColor: 'rgba(0, 212, 255, 0.2)', my: 2 }} />
+          <Divider sx={{ borderColor: isDarkMode ? 'rgba(0, 212, 255, 0.2)' : 'rgba(124, 58, 237, 0.2)', my: 2 }} />
           <Box sx={{ px: 2 }}>
             <Button
               variant="contained"

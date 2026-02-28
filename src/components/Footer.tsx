@@ -6,9 +6,11 @@ import {
   Stack,
   Link,
   Divider,
+  useTheme,
 } from '@mui/material';
 
 export const Footer: React.FC = () => {
+  const theme = useTheme();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -16,9 +18,9 @@ export const Footer: React.FC = () => {
       component="footer"
       sx={{
         background: `linear-gradient(135deg, 
-          rgba(10, 14, 39, 0.95) 0%,
-          rgba(15, 23, 41, 0.95) 100%)`,
-        borderTop: '1px solid rgba(0, 212, 255, 0.2)',
+          ${theme.palette.background.default} 0%,
+          ${theme.palette.mode === 'dark' ? 'rgba(15, 23, 41, 0.95)' : 'rgba(235, 225, 255, 0.95)'} 100%)`,
+        borderTop: `1px solid rgba(${theme.palette.primary.main === '#7C3AED' ? '124, 58, 237' : '0, 212, 255'}, 0.2)`,
         pt: 6,
         pb: 4,
       }}
@@ -41,7 +43,9 @@ export const Footer: React.FC = () => {
                 sx={{
                   fontSize: '1.25rem',
                   fontWeight: 700,
-                  background: 'linear-gradient(135deg, #00D4FF 0%, #1E88E5 100%)',
+                  background: theme.palette.primary.main === '#7C3AED'
+                    ? 'linear-gradient(135deg, #7C3AED 0%, #B794F6 100%)'
+                    : 'linear-gradient(135deg, #00D4FF 0%, #1E88E5 100%)',
                   backgroundClip: 'text',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
@@ -53,7 +57,7 @@ export const Footer: React.FC = () => {
               <Typography
                 variant="body2"
                 sx={{
-                  color: '#B0BEC5',
+                  color: theme.palette.text.secondary,
                 }}
               >
                 Full Stack Developer & Tech Enthusiast
@@ -67,12 +71,12 @@ export const Footer: React.FC = () => {
                   key={item}
                   href={`#${item.toLowerCase()}`}
                   sx={{
-                    color: '#B0BEC5',
+                    color: theme.palette.text.secondary,
                     textDecoration: 'none',
                     fontWeight: 500,
                     transition: 'color 0.3s ease',
                     '&:hover': {
-                      color: '#00D4FF',
+                      color: theme.palette.primary.main,
                     },
                   }}
                 >
@@ -85,7 +89,7 @@ export const Footer: React.FC = () => {
 
         <Divider
           sx={{
-            borderColor: 'rgba(0, 212, 255, 0.2)',
+            borderColor: `rgba(${theme.palette.primary.main === '#7C3AED' ? '124, 58, 237' : '0, 212, 255'}, 0.2)`,
             my: 3,
           }}
         />
@@ -102,7 +106,7 @@ export const Footer: React.FC = () => {
           <Typography
             variant="body2"
             sx={{
-              color: '#666',
+              color: theme.palette.text.secondary,
             }}
           >
             {`© ${currentYear} Rafi Ullah. All rights reserved.`}
@@ -111,7 +115,7 @@ export const Footer: React.FC = () => {
           <Typography
             variant="body2"
             sx={{
-              color: '#666',
+              color: theme.palette.text.secondary,
             }}
           >
             Built with React, Next.js, and Material-UI
@@ -123,11 +127,11 @@ export const Footer: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               sx={{
-                color: '#B0BEC5',
+                color: theme.palette.text.secondary,
                 textDecoration: 'none',
                 transition: 'color 0.3s ease',
                 '&:hover': {
-                  color: '#00D4FF',
+                  color: theme.palette.primary.main,
                 },
               }}
             >
@@ -138,11 +142,11 @@ export const Footer: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               sx={{
-                color: '#B0BEC5',
+                color: theme.palette.text.secondary,
                 textDecoration: 'none',
                 transition: 'color 0.3s ease',
                 '&:hover': {
-                  color: '#00D4FF',
+                  color: theme.palette.primary.main,
                 },
               }}
             >
@@ -151,11 +155,11 @@ export const Footer: React.FC = () => {
             <Link
               href="mailto:rafi.freelancer9@gmail.com"
               sx={{
-                color: '#B0BEC5',
+                color: theme.palette.text.secondary,
                 textDecoration: 'none',
                 transition: 'color 0.3s ease',
                 '&:hover': {
-                  color: '#00D4FF',
+                  color: theme.palette.primary.main,
                 },
               }}
             >
