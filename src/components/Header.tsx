@@ -171,7 +171,7 @@ export const Header: React.FC<HeaderProps> = ({ onThemeToggle, isDarkMode }) => 
                 <ListItemButton
                   onClick={() => handleNavClick(item)}
                   sx={{
-                    color: 'inherit',
+                    color: theme.palette.text.primary,
                     '&:hover': {
                       backgroundColor: isDarkMode
                         ? 'rgba(0, 212, 255, 0.1)'
