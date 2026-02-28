@@ -33,7 +33,7 @@ export const Header: React.FC<HeaderProps> = ({ onThemeToggle, isDarkMode }) => 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  const navItems = ['About', 'Skills', 'Projects', 'Experience', 'Contact'];
+  const navItems = ['About', 'Skills', 'Projects', 'Experience', 'Certifications', 'Contact'];
 
   const handleNavClick = (id: string) => {
     const element = document.getElementById(id.toLowerCase());
