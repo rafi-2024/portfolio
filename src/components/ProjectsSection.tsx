@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+'use client';
+
+import React, { useState }  from 'react';
 import {
   Box,
   Container,
@@ -20,13 +22,65 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 
-const MotionCard = motion(Card);
+interface Project {
+  id: string;
+  title: string;
+  description: string;
+  technologies: string[];
+  imageFolder: string;
+  imageCount: number;
+  github?: string;
+  metrics?: string[];
+}
 
 interface ProjectCardProps {
   project: Project;
   isFlipped: boolean;
   onFlip: () => void;
 }
+
+const projects: Project[] = [
+  {
+    id: 'pension-system',
+    title: 'Pension Management System',
+    description: 'Built an MS-Access-based system automating pension eligibility, calculation, case processing and audit reporting for large employee datasets as per Federal Government requirements.',
+    technologies: ['MS-Access', 'VBA', 'Database Design'],
+    imageFolder: '/projects/pension-system',
+    imageCount: 4,
+    github: 'https://github.com/rafi-2024',
+    metrics: ['99.8% Accuracy', '90% Time Reduction'],
+  },
+  {
+    id: 'record-management',
+    title: 'Record Management Web App',
+    description: 'Built a full-stack Flask application with authentication, CRUD operations, and form validation for managing organizational records.',
+    technologies: ['Flask', 'Python', 'SQLite', 'HTML5'],
+    imageFolder: '/projects/record-management',
+    imageCount: 4,
+    github: 'https://github.com/rafi-2024/record_management_app',
+    metrics: ['CS50 Project', '45% Efficiency Gain'],
+  },
+  {
+    id: 'billing-accounting',
+    title: 'Billing & Accounting System',
+    description: 'Built a full-stack billing and accounting platform using Django REST, React, and PostgreSQL.',
+    technologies: ['Django', 'React', 'PostgreSQL', 'REST APIs'],
+    imageFolder: '/projects/billing-accounting',
+    imageCount: 4,
+    github: 'https://github.com/rafi-2024/CBC-New',
+    metrics: ['90% Automation', 'Production Ready'],
+  },
+  {
+    id: 'payroll-parser',
+    title: 'Payroll PDF Parser System',
+    description: 'Developed a full-stack payroll PDF parsing system using Django REST Framework and React with async processing.',
+    technologies: ['Django', 'React', 'PostgreSQL', 'Celery', 'Redis'],
+    imageFolder: '/projects/payroll-parser',
+    imageCount: 4,
+    github: 'https://github.com/rafi-2024/payroll-New',
+    metrics: ['70% Time Reduction', 'Async Processing'],
+  },
+];
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, isFlipped, onFlip }) => {
   const theme = useTheme();
@@ -54,21 +108,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isFlipped, onFlip })
       transition={{ duration: 0.3 }}
       style={{ perspective: '1000px', height: '100%' }}
     >
-      <MotionCard
+      <motion.div
         onClick={onFlip}
-        sx={{
+        style={{
+          perspective: '1000px',
           height: '100%',
           cursor: 'pointer',
-          background: isFlipped
-            ? `linear-gradient(135deg, ${theme.palette.primary.main}20, ${theme.palette.secondary.main}20)`
-            : theme.palette.mode === 'dark'
-              ? 'rgba(255, 255, 255, 0.05)'
-              : 'rgba(255, 255, 255, 0.8)',
-          border: `1px solid ${theme.palette.divider}`,
-          backdropFilter: 'blur(10px)',
+          borderRadius: '12px',
           overflow: 'hidden',
-          transition: 'all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)',
-          transformStyle: 'preserve-3d',
         }}
       >
         <AnimatePresence mode="wait">
@@ -79,62 +126,46 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isFlipped, onFlip })
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
+              style={{ height: '100%' }}
             >
-              <CardContent sx={{ p: 3, height: '100%', display: 'flex', flexDirection: 'column' }}>
-                <Typography
-                  variant="h6"
-                  sx={{
-                    fontWeight: 700,
-                    mb: 2,
-                    color: theme.palette.text.primary,
-                    fontSize: isMobile ? '1.1rem' : '1.3rem',
-                  }}
-                >
-                  {project.title}
-                </Typography>
-
-                <Typography
-                  variant="body2"
-                  sx={{
-                    color: theme.palette.text.secondary,
-                    mb: 2.5,
-                    lineHeight: 1.6,
-                    flex: 1,
-                  }}
-                >
-                  {project.description}
-                </Typography>
-
-                <Box sx={{ mb: 2.5 }}>
+              <Card
+                sx={{
+                  height: '100%',
+                  cursor: 'pointer',
+                  background: theme.palette.mode === 'dark'
+                    ? 'rgba(255, 255, 255, 0.05)'
+                    : 'rgba(255, 255, 255, 0.8)',
+                  border: `1px solid ${theme.palette.divider}`,
+                  backdropFilter: 'blur(10px)',
+                  overflow: 'hidden',
+                  transition: 'all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+                }}
+              >
+                <CardContent sx={{ p: 3, height: '100%', display: 'flex', flexDirection: 'column' }}>
                   <Typography
-                    variant="caption"
+                    variant="h6"
                     sx={{
-                      color: theme.palette.text.secondary,
-                      fontWeight: 600,
-                      mb: 1,
-                      display: 'block',
+                      fontWeight: 700,
+                      mb: 2,
+                      color: theme.palette.text.primary,
+                      fontSize: isMobile ? '1.1rem' : '1.3rem',
                     }}
                   >
-                    TECH STACK
+                    {project.title}
                   </Typography>
-                  <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-                    {project.technologies.map((tech) => (
-                      <Chip
-                        key={tech}
-                        label={tech}
-                        size="small"
-                        sx={{
-                          background: `linear-gradient(135deg, ${theme.palette.primary.main}40, ${theme.palette.secondary.main}40)`,
-                          color: theme.palette.text.primary,
-                          border: `1px solid ${theme.palette.primary.main}`,
-                          fontWeight: 500,
-                        }}
-                      />
-                    ))}
-                  </Box>
-                </Box>
 
-                {project.metrics && (
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      color: theme.palette.text.secondary,
+                      mb: 2.5,
+                      lineHeight: 1.6,
+                      flex: 1,
+                    }}
+                  >
+                    {project.description}
+                  </Typography>
+
                   <Box sx={{ mb: 2.5 }}>
                     <Typography
                       variant="caption"
@@ -145,69 +176,100 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isFlipped, onFlip })
                         display: 'block',
                       }}
                     >
-                      KEY METRICS
+                      TECH STACK
                     </Typography>
                     <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-                      {project.metrics.map((metric) => (
+                      {project.technologies.map((tech) => (
                         <Chip
-                          key={metric}
-                          label={metric}
+                          key={tech}
+                          label={tech}
                           size="small"
-                          variant="outlined"
                           sx={{
-                            color: theme.palette.primary.main,
-                            borderColor: theme.palette.primary.main,
+                            background: `linear-gradient(135deg, ${theme.palette.primary.main}40, ${theme.palette.secondary.main}40)`,
+                            color: theme.palette.text.primary,
+                            border: `1px solid ${theme.palette.primary.main}`,
                             fontWeight: 500,
                           }}
                         />
                       ))}
                     </Box>
                   </Box>
-                )}
 
-                <Box sx={{ display: 'flex', gap: 1, mt: 'auto' }}>
-                  {project.github && (
+                  {project.metrics && (
+                    <Box sx={{ mb: 2.5 }}>
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          color: theme.palette.text.secondary,
+                          fontWeight: 600,
+                          mb: 1,
+                          display: 'block',
+                        }}
+                      >
+                        METRICS
+                      </Typography>
+                      <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+                        {project.metrics.map((metric) => (
+                          <Chip
+                            key={metric}
+                            label={metric}
+                            size="small"
+                            variant="outlined"
+                            sx={{
+                              color: theme.palette.primary.main,
+                              borderColor: theme.palette.primary.main,
+                              fontWeight: 500,
+                            }}
+                          />
+                        ))}
+                      </Box>
+                    </Box>
+                  )}
+
+                  <Box sx={{ display: 'flex', gap: 1, mt: 'auto' }}>
+                    {project.github && (
+                      <Button
+                        variant="outlined"
+                        size="small"
+                        startIcon={<GitHubIcon />}
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        sx={{
+                          color: theme.palette.primary.main,
+                          borderColor: theme.palette.primary.main,
+                          flex: 1,
+                          '&:hover': {
+                            background: theme.palette.primary.main,
+                            color: theme.palette.mode === 'dark' ? '#000' : '#fff',
+                          },
+                        }}
+                      >
+                        GitHub
+                      </Button>
+                    )}
                     <Button
-                      variant="outlined"
+                      variant="contained"
                       size="small"
-                      startIcon={<GitHubIcon />}
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={(e) => e.stopPropagation()}
+                      startIcon={<LaunchIcon />}
                       sx={{
-                        color: theme.palette.primary.main,
-                        borderColor: theme.palette.primary.main,
+                        background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
                         flex: 1,
                         '&:hover': {
-                          background: theme.palette.primary.main,
-                          color: theme.palette.mode === 'dark' ? '#000' : '#fff',
+                          opacity: 0.9,
                         },
                       }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onFlip();
+                      }}
                     >
-                      GitHub
+                      View Images
                     </Button>
-                  )}
-                  <Button
-                    variant="contained"
-                    size="small"
-                    startIcon={<LaunchIcon />}
-                    sx={{
-                      background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-                      flex: 1,
-                      '&:hover': {
-                        opacity: 0.9,
-                      },
-                    }}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onFlip();
-                    }}
-                  >
-                    View Images
-                  </Button>
-                </Box>
-              </CardContent>
+                  </Box>
+                </CardContent>
+              </Card>
             </motion.div>
           ) : (
             <motion.div
@@ -216,6 +278,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isFlipped, onFlip })
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
+              style={{ height: '100%' }}
             >
               <Box
                 sx={{
@@ -223,19 +286,25 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isFlipped, onFlip })
                   width: '100%',
                   height: isMobile ? '300px' : '400px',
                   background: theme.palette.background.paper,
+                  overflow: 'hidden',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                 }}
               >
                 <Image
                   src={`${project.imageFolder}/${currentImageIndex + 1}.jpg`}
                   alt={`${project.title} - Image ${currentImageIndex + 1}`}
-                  fill
+                  width={600}
+                  height={isMobile ? 300 : 400}
+                  priority
                   style={{
                     objectFit: 'cover',
+                    width: '100%',
+                    height: '100%',
                   }}
-                  priority
                 />
 
-                {/* Gradient Overlay */}
                 <Box
                   sx={{
                     position: 'absolute',
@@ -245,7 +314,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isFlipped, onFlip })
                   }}
                 />
 
-                {/* Navigation Arrows */}
                 <IconButton
                   onClick={handlePrevImage}
                   sx={{
@@ -282,7 +350,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isFlipped, onFlip })
                   <ChevronRightIcon />
                 </IconButton>
 
-                {/* Dot Indicators */}
                 <Box
                   sx={{
                     position: 'absolute',
@@ -297,7 +364,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isFlipped, onFlip })
                   {Array.from({ length: project.imageCount }).map((_, idx) => (
                     <motion.button
                       key={idx}
-                      onClick={(e) => handleDotClick(idx, e as any)}
+                      onClick={(e: React.MouseEvent) => handleDotClick(idx, e)}
                       whileHover={{ scale: 1.2 }}
                       whileTap={{ scale: 0.9 }}
                       style={{
@@ -313,7 +380,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isFlipped, onFlip })
                   ))}
                 </Box>
 
-                {/* Image Counter */}
                 <Typography
                   sx={{
                     position: 'absolute',
@@ -332,7 +398,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isFlipped, onFlip })
                   {currentImageIndex + 1} / {project.imageCount}
                 </Typography>
 
-                {/* Title Overlay at Bottom */}
                 <Box
                   sx={{
                     position: 'absolute',
@@ -353,67 +418,10 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isFlipped, onFlip })
             </motion.div>
           )}
         </AnimatePresence>
-      </MotionCard>
+      </motion.div>
     </motion.div>
   );
 };
-
-interface Project {
-  id: string;
-  title: string;
-  description: string;
-  technologies: string[];
-  imageFolder: string;
-  imageCount: number;
-  github?: string;
-  metrics?: string[];
-}
-
-const projects: Project[] = [
-  {
-    id: 'pension-system',
-    title: 'Pension Management System',
-    description:
-      'Built an MS-Access-based system automating pension eligibility, calculation, case processing and audit reporting for large employee datasets as per Federal Government requirements. Implemented validation logic and calculation formulas achieving 99.8% data accuracy with zero processing errors. Reduced pension processing time by 90% through workflow automation.',
-    technologies: ['MS-Access', 'VBA', 'Database Design', 'Automation'],
-    imageFolder: '/projects/pension-system',
-    imageCount: 4,
-    metrics: ['99.8% Accuracy', '90% Time Reduction', 'Gov Deployment'],
-  },
-  {
-    id: 'record-management',
-    title: 'Record Management Web App',
-    description:
-      'Built a full-stack Flask application with authentication, CRUD operations, and form validation for managing organizational records. Designed SQLite database schema and backend logic to ensure secure, accurate, and maintainable data handling. Reduced manual record tracking effort by ~45% through centralized digital workflows.',
-    technologies: ['Flask', 'Python', 'SQLite', 'HTML5', 'CSS3', 'JavaScript'],
-    imageFolder: '/projects/record-management',
-    imageCount: 4,
-    github: 'https://github.com/rafi-2024/record_management_app',
-    metrics: ['CS50 Project', '45% Efficiency Gain', 'Full CRUD'],
-  },
-  {
-    id: 'billing-accounting',
-    title: 'Billing & Accounting System',
-    description:
-      'Built a full-stack billing and accounting platform using Django REST, React, and PostgreSQL. Implemented secure role-based access control and REST APIs for financial transactions. Deployed and validated the system with automated tests, automating billing creation and reducing manual work by 90%.',
-    technologies: ['Django', 'React', 'PostgreSQL', 'REST APIs', 'RBAC'],
-    imageFolder: '/projects/billing-accounting',
-    imageCount: 4,
-    github: 'https://github.com/rafi-2024/CBC-New',
-    metrics: ['90% Automation', 'Production Ready', 'Gov Standard'],
-  },
-  {
-    id: 'payroll-parser',
-    title: 'Payroll PDF Parser System',
-    description:
-      'Developed a full-stack payroll PDF parsing system using Django REST Framework and React, converting PDF data to CSV for bulk import. Implemented asynchronous processing with Celery and Redis for concurrent extraction, reducing manual processing by ~70%. Built real-time dashboard with search, filtering, and SHA256 duplicate detection. Dockerized with secure authentication and proper volume mounting.',
-    technologies: ['Django', 'React', 'PostgreSQL', 'Celery', 'Redis', 'Docker'],
-    imageFolder: '/projects/payroll-parser',
-    imageCount: 4,
-    github: 'https://github.com/rafi-2024/payroll-New',
-    metrics: ['70% Time Reduction', 'Async Processing', 'SHA256 Validation'],
-  },
-];
 
 export const ProjectsSection: React.FC = () => {
   const theme = useTheme();
@@ -472,7 +480,7 @@ export const ProjectsSection: React.FC = () => {
               mx: 'auto',
             }}
           >
-            Click on any project to explore the image gallery and see the work in action
+            Click on any project to explore the image gallery
           </Typography>
         </Box>
 

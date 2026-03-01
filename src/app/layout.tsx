@@ -74,7 +74,7 @@ export default function RootLayout({
         <ThemeProvider theme={isDarkMode ? darkTheme : wisteriaTheme}>
           <CssBaseline />
           {children && typeof children === 'object' && 'props' in children
-            ? React.cloneElement(children as React.ReactElement, { onThemeChange: handleThemeChange } as any)
+            ? React.cloneElement(children as React.ReactElement<{onThemeChange?: (isDark: boolean) => void}>, { onThemeChange: handleThemeChange })
             : children}
         </ThemeProvider>
       </body>
