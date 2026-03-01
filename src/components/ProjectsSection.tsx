@@ -20,6 +20,8 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 
+const MotionCard = motion(Card);
+
 interface ProjectCardProps {
   project: Project;
   isFlipped: boolean;
