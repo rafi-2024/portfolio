@@ -42,26 +42,7 @@ interface ProjectCardProps {
 }
 
 const projects: Project[] = [
-  {
-    id: 'pension-system',
-    title: 'Pension Management System',
-    description: 'Built an MS-Access-based system automating pension eligibility, calculation, case processing and audit reporting for large employee datasets as per Federal Government requirements.',
-    technologies: ['MS-Access', 'VBA', 'Database Design'],
-    imageFolder: '/projects/pension-system',
-    imageCount: 4,
-    github: 'https://github.com/rafi-2024',
-    metrics: ['99.8% Accuracy', '90% Time Reduction'],
-  },
-  {
-    id: 'record-management',
-    title: 'Record Management Web App',
-    description: 'Built a full-stack Flask application with authentication, CRUD operations, and form validation for managing organizational records.',
-    technologies: ['Flask', 'Python', 'SQLite', 'HTML5'],
-    imageFolder: '/projects/record-management',
-    imageCount: 4,
-    github: 'https://github.com/rafi-2024/record_management_app',
-    metrics: ['CS50 Project', '45% Efficiency Gain'],
-  },
+
   {
     id: 'billing-accounting',
     title: 'Billing & Accounting System',
@@ -81,6 +62,26 @@ const projects: Project[] = [
     imageCount: 4,
     github: 'https://github.com/rafi-2024/payroll-New',
     metrics: ['70% Time Reduction', 'Async Processing'],
+  },
+    {
+    id: 'pension-system',
+    title: 'Pension Management System',
+    description: 'Built an MS-Access-based system automating pension eligibility, calculation, case processing and audit reporting for large employee datasets as per Federal Government requirements.',
+    technologies: ['MS-Access', 'VBA', 'Database Design'],
+    imageFolder: '/projects/pension-system',
+    imageCount: 4,
+    github: 'https://github.com/rafi-2024',
+    metrics: ['99.8% Accuracy', '90% Time Reduction'],
+  },
+  {
+    id: 'record-management',
+    title: 'Record Management Web App',
+    description: 'Built a full-stack Flask application with authentication, CRUD operations, and form validation for managing organizational records.',
+    technologies: ['Flask', 'Python', 'SQLite', 'HTML5'],
+    imageFolder: '/projects/record-management',
+    imageCount: 4,
+    github: 'https://github.com/rafi-2024/record_management_app',
+    metrics: ['CS50 Project', '45% Efficiency Gain'],
   },
 ];
 
