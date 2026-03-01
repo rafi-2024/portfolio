@@ -22,6 +22,8 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 
+const MotionCard = motion.create(Card);
+
 interface Project {
   id: string;
   title: string;
@@ -108,14 +110,18 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isFlipped, onFlip })
       transition={{ duration: 0.3 }}
       style={{ perspective: '1000px', height: '100%' }}
     >
-      <motion.div
+      <MotionCard
         onClick={onFlip}
-        style={{
-          perspective: '1000px',
+        sx={{
           height: '100%',
           cursor: 'pointer',
-          borderRadius: '12px',
+          background: theme.palette.mode === 'dark'
+            ? 'rgba(255, 255, 255, 0.05)'
+            : 'rgba(255, 255, 255, 0.8)',
+          border: `1px solid ${theme.palette.divider}`,
+          backdropFilter: 'blur(10px)',
           overflow: 'hidden',
+          transition: 'all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)',
         }}
       >
         <AnimatePresence mode="wait">
@@ -128,19 +134,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isFlipped, onFlip })
               transition={{ duration: 0.3 }}
               style={{ height: '100%' }}
             >
-              <Card
-                sx={{
-                  height: '100%',
-                  cursor: 'pointer',
-                  background: theme.palette.mode === 'dark'
-                    ? 'rgba(255, 255, 255, 0.05)'
-                    : 'rgba(255, 255, 255, 0.8)',
-                  border: `1px solid ${theme.palette.divider}`,
-                  backdropFilter: 'blur(10px)',
-                  overflow: 'hidden',
-                  transition: 'all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)',
-                }}
-              >
                 <CardContent sx={{ p: 3, height: '100%', display: 'flex', flexDirection: 'column' }}>
                   <Typography
                     variant="h6"
@@ -269,17 +262,16 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isFlipped, onFlip })
                     </Button>
                   </Box>
                 </CardContent>
-              </Card>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="back"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              style={{ height: '100%' }}
-            >
+              </motion.div>
+            ) : (
+              <motion.div
+                key="back"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                style={{ height: '100%' }}
+              >
               <Box
                 sx={{
                   position: 'relative',
@@ -302,6 +294,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isFlipped, onFlip })
                     objectFit: 'cover',
                     width: '100%',
                     height: '100%',
+                    
                   }}
                 />
 
@@ -418,7 +411,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isFlipped, onFlip })
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.div>
+      </MotionCard>
     </motion.div>
   );
 };
