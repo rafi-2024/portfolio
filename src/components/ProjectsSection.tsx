@@ -291,10 +291,10 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, isFlipped, onFlip })
                   height={isMobile ? 300 : 400}
                   priority
                   style={{
-                    objectFit: 'cover',
+                    objectFit: 'contain',
                     width: '100%',
                     height: '100%',
-                    
+                    transform: 'scale(0.95)',
                   }}
                 />
 
