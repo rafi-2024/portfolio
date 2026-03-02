@@ -129,40 +129,27 @@ export const ServicesSection: React.FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
+  const mapToUIPackages = (data: ServicePackageFromDB[]) => {
+    return data.map((pkg, index) => ({
+      ...pkg,
+      iconComponent: iconMap[pkg.icon] || iconMap.Rocket,
+      color: colorMap[index % colorMap.length],
+    }));
+  };
+
   useEffect(() => {
     const fetchPackages = async () => {
       try {
         const response = await fetch('/api/services');
-        if (!response.ok) throw new Error('Failed to fetch packages');
-        
-        const data: ServicePackageFromDB[] = await response.json();
-        
-        // If no data from database, use fallback
-        if (!data || data.length === 0) {
-          const packagesWithUI = fallbackPackages.map((pkg, index) => ({
-            ...pkg,
-            iconComponent: iconMap[pkg.icon] || iconMap['Rocket'],
-            color: colorMap[index % colorMap.length],
-          }));
-          setPackages(packagesWithUI);
-        } else {
-          // Transform database data to UI format
-          const packagesWithUI = data.map((pkg, index) => ({
-            ...pkg,
-            iconComponent: iconMap[pkg.icon] || iconMap['Rocket'],
-            color: colorMap[index % colorMap.length],
-          }));
-          setPackages(packagesWithUI);
+        if (!response.ok) {
+          setPackages(mapToUIPackages(fallbackPackages));
+          return;
         }
-      } catch (error) {
-        console.error('Error fetching packages:', error);
-        // Fallback to hardcoded data on error
-        const packagesWithUI = fallbackPackages.map((pkg, index) => ({
-          ...pkg,
-          iconComponent: iconMap[pkg.icon] || iconMap['Rocket'],
-          color: colorMap[index % colorMap.length],
-        }));
-        setPackages(packagesWithUI);
+
+        const data = (await response.json()) as ServicePackageFromDB[];
+        setPackages(mapToUIPackages(data && data.length > 0 ? data : fallbackPackages));
+      } catch {
+        setPackages(mapToUIPackages(fallbackPackages));
       } finally {
         setLoading(false);
       }

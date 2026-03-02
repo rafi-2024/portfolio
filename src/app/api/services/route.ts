@@ -19,9 +19,6 @@ export async function GET() {
     return NextResponse.json(packages);
   } catch (error) {
     console.error('Error fetching service packages:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch service packages' },
-      { status: 500 }
-    );
+    return NextResponse.json([]);
   }
 }
