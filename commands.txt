@@ -3,3 +3,4 @@ npm run docker:dev          # Start Docker services
 npm run prisma:studio       # Open database GUI
 npm run docker:dev:logs     # View logs
 npm run docker:dev:down     # Stop services
+npm run prisma:studio

@@ -88,9 +88,22 @@ export async function POST(request: NextRequest) {
     };
 
     // Save to database
-    const savedMessage = await prisma.contactMessage.create({
-      data: contactData,
-    });
+    let savedMessage;
+    try {
+      savedMessage = await prisma.contactMessage.create({
+        data: contactData,
+      });
+    } catch (dbError) {
+      console.error('Database error:', dbError);
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Database error. Please try again later.',
+          error: dbError instanceof Error ? dbError.message : 'Unknown database error',
+        },
+        { status: 503 }
+      );
+    }
 
     // Trigger n8n webhook (non-blocking)
     triggerN8nWebhook({
@@ -116,6 +129,17 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Error processing contact form:', error);
 
+    // Check for JSON parsing errors
+    if (error instanceof SyntaxError) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Invalid request format. Please ensure you are sending valid JSON.',
+        },
+        { status: 400 }
+      );
+    }
+
     // Check for Prisma-specific errors
     if (error instanceof Error) {
       if (error.message.includes('Prisma')) {
@@ -133,6 +157,7 @@ export async function POST(request: NextRequest) {
       {
         success: false,
         message: 'An unexpected error occurred. Please try again later.',
+        error: error instanceof Error ? error.message : 'Unknown error',
       },
       { status: 500 }
     );
