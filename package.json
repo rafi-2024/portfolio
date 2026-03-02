@@ -17,6 +17,7 @@
     "db:init:bash": "bash scripts/init-db.sh",
     "docker:dev": "docker-compose up -d",
     "docker:dev:build": "docker-compose up -d --build",
+    "docker:dev:build:optimized": "powershell -ExecutionPolicy Bypass -File ./scripts/docker-build.ps1 && docker-compose up -d",
     "docker:dev:down": "docker-compose down",
     "docker:dev:logs": "docker-compose logs -f",
     "docker:prod": "docker-compose -f docker-compose.prod.yml up -d",
