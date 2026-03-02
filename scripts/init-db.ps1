@@ -17,7 +17,7 @@ $RETRY_INTERVAL = 2
 function Test-PostgreSQL {
     try {
         $env:PGPASSWORD = $DB_PASSWORD
-        $result = psql -h $DB_HOST -p $DB_PORT -U $DB_USER -d $DB_NAME -c '\q' 2>&1
+        $null = psql -h $DB_HOST -p $DB_PORT -U $DB_USER -d $DB_NAME -c '\q' 2>&1
         return $LASTEXITCODE -eq 0
     }
     catch {
