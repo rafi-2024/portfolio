@@ -52,9 +52,7 @@ export default function Home() {
       <Header onThemeToggle={handleThemeToggle} isDarkMode={isDarkMode} />
       <Box component="main" sx={{ flex: 1, mt: 8 }}>
         <HeroSection />
-        <Box id="about">
-          <SkillsSection />
-        </Box>
+        <SkillsSection />
         <ProjectsSection />
         <ExperienceSection />
         <CertificationsSection />

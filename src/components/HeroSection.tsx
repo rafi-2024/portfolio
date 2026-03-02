@@ -48,7 +48,7 @@ export const HeroSection: React.FC = () => {
   return (
     <Box
       component="section"
-      id="hero"
+      id="about"
       sx={{
         minHeight: '100vh',
         display: 'flex',
