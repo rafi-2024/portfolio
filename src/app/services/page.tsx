@@ -57,7 +57,7 @@ export default function ServicesPage() {
       }}
     >
       <Header onThemeToggle={handleThemeToggle} isDarkMode={isDarkMode} />
-      <Box component="main" sx={{ flex: 1, mt: 8 }}>
+      <Box component="main" sx={{ flex: 1, mt: 4 }}>
         <ServicesSection />
         <ContactSection />
       </Box>

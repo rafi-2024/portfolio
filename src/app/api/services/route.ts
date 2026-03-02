@@ -3,6 +3,11 @@ import { prisma } from '@/lib/prisma';
 
 export async function GET() {
   try {
+    if (!prisma) {
+      console.warn('Prisma client not available, returning empty array');
+      return NextResponse.json([]);
+    }
+
     const packages = await prisma.servicePackage.findMany({
       include: {
         features: {

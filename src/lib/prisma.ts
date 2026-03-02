@@ -10,6 +10,16 @@ const prismaClientOptions = {
   }),
 };
 
-export const prisma = globalForPrisma.prisma ?? new PrismaClient(prismaClientOptions);
+let prismaInstance: PrismaClient | null = null;
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
+try {
+  prismaInstance = globalForPrisma.prisma ?? new PrismaClient(prismaClientOptions);
+  if (process.env.NODE_ENV !== 'production') {
+    globalForPrisma.prisma = prismaInstance;
+  }
+} catch (error) {
+  console.error('Failed to initialize Prisma Client:', error);
+  prismaInstance = new PrismaClient(prismaClientOptions);
+}
+
+export const prisma = prismaInstance;
