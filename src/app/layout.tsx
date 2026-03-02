@@ -2,24 +2,12 @@
 'use client';
 
 import React from "react";
-import { Geist, Geist_Mono } from "next/font/google";
 import { useState, useEffect } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { darkTheme, wisteriaTheme } from "@/theme";
 
 import "./globals.css";
-
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export default function RootLayout({
   children,
@@ -53,7 +41,7 @@ export default function RootLayout({
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <meta name="keywords" content="full stack developer, react developer, node.js, python, web development" />
         </head>
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <body className="antialiased">
           <ThemeProvider theme={darkTheme}>
             <CssBaseline />
           </ThemeProvider>
@@ -70,7 +58,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="keywords" content="full stack developer, react developer, node.js, python, web development" />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className="antialiased">
         <ThemeProvider theme={isDarkMode ? darkTheme : wisteriaTheme}>
           <CssBaseline />
           {children && typeof children === 'object' && 'props' in children

@@ -8,7 +8,12 @@ COPY prisma ./prisma/
 
 # Development stage
 FROM base AS development
-RUN npm ci
+RUN npm config set fetch-retries 5 \
+  && npm config set fetch-retry-factor 2 \
+  && npm config set fetch-retry-mintimeout 20000 \
+  && npm config set fetch-retry-maxtimeout 120000 \
+  && npm config set fetch-timeout 300000 \
+  && for i in 1 2 3; do npm ci && break || (echo "npm ci failed (attempt $i), retrying..." && sleep 10); done
 COPY . .
 RUN npx prisma generate
 EXPOSE 3000
@@ -16,11 +21,21 @@ CMD ["npm", "run", "dev"]
 
 # Dependencies for production build
 FROM base AS deps
-RUN npm ci --only=production
+RUN npm config set fetch-retries 5 \
+  && npm config set fetch-retry-factor 2 \
+  && npm config set fetch-retry-mintimeout 20000 \
+  && npm config set fetch-retry-maxtimeout 120000 \
+  && npm config set fetch-timeout 300000 \
+  && for i in 1 2 3; do npm ci --omit=dev && break || (echo "npm ci --omit=dev failed (attempt $i), retrying..." && sleep 10); done
 
 # Builder stage - compile TypeScript and build Next.js
 FROM base AS builder
-RUN npm ci
+RUN npm config set fetch-retries 5 \
+  && npm config set fetch-retry-factor 2 \
+  && npm config set fetch-retry-mintimeout 20000 \
+  && npm config set fetch-retry-maxtimeout 120000 \
+  && npm config set fetch-timeout 300000 \
+  && for i in 1 2 3; do npm ci && break || (echo "npm ci failed (attempt $i), retrying..." && sleep 10); done
 COPY . .
 
 # Generate Prisma Client
