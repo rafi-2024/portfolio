@@ -1,0 +1,165 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
+
+// Validation helper
+function validateContactData(data: any): { valid: boolean; errors: string[] } {
+  const errors: string[] = [];
+
+  if (!data.name || typeof data.name !== 'string' || data.name.trim().length < 2) {
+    errors.push('Name must be at least 2 characters long');
+  }
+
+  if (!data.email || typeof data.email !== 'string') {
+    errors.push('Valid email is required');
+  } else {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(data.email)) {
+      errors.push('Invalid email format');
+    }
+  }
+
+  if (!data.subject || typeof data.subject !== 'string' || data.subject.trim().length < 5) {
+    errors.push('Subject must be at least 5 characters long');
+  }
+
+  if (!data.message || typeof data.message !== 'string' || data.message.trim().length < 10) {
+    errors.push('Message must be at least 10 characters long');
+  }
+
+  return {
+    valid: errors.length === 0,
+    errors,
+  };
+}
+
+// Trigger n8n webhook
+async function triggerN8nWebhook(contactData: any) {
+  const webhookUrl = process.env.N8N_WEBHOOK_URL;
+  
+  if (!webhookUrl) {
+    console.warn('N8N_WEBHOOK_URL not configured, skipping webhook trigger');
+    return;
+  }
+
+  try {
+    const response = await fetch(webhookUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(contactData),
+    });
+
+    if (!response.ok) {
+      console.error('n8n webhook failed:', response.status, response.statusText);
+    } else {
+      console.log('n8n webhook triggered successfully');
+    }
+  } catch (error) {
+    console.error('Error triggering n8n webhook:', error);
+    // Don't throw - we don't want to fail the request if webhook fails
+  }
+}
+
+export async function POST(request: NextRequest) {
+  try {
+    // Parse request body
+    const body = await request.json();
+
+    // Validate input
+    const validation = validateContactData(body);
+    if (!validation.valid) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Validation failed',
+          errors: validation.errors,
+        },
+        { status: 400 }
+      );
+    }
+
+    // Sanitize and prepare data
+    const contactData = {
+      name: body.name.trim(),
+      email: body.email.trim().toLowerCase(),
+      subject: body.subject.trim(),
+      message: body.message.trim(),
+    };
+
+    // Save to database
+    const savedMessage = await prisma.contactMessage.create({
+      data: contactData,
+    });
+
+    // Trigger n8n webhook (non-blocking)
+    triggerN8nWebhook({
+      ...contactData,
+      id: savedMessage.id,
+      createdAt: savedMessage.createdAt,
+    }).catch((error) => {
+      console.error('Webhook trigger failed:', error);
+    });
+
+    // Return success response
+    return NextResponse.json(
+      {
+        success: true,
+        message: 'Message sent successfully! I will get back to you soon.',
+        data: {
+          id: savedMessage.id,
+          createdAt: savedMessage.createdAt,
+        },
+      },
+      { status: 201 }
+    );
+  } catch (error) {
+    console.error('Error processing contact form:', error);
+
+    // Check for Prisma-specific errors
+    if (error instanceof Error) {
+      if (error.message.includes('Prisma')) {
+        return NextResponse.json(
+          {
+            success: false,
+            message: 'Database connection error. Please try again later.',
+          },
+          { status: 503 }
+        );
+      }
+    }
+
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'An unexpected error occurred. Please try again later.',
+      },
+      { status: 500 }
+    );
+  }
+}
+
+// Health check endpoint
+export async function GET() {
+  try {
+    // Test database connection
+    await prisma.$queryRaw`SELECT 1`;
+
+    return NextResponse.json(
+      {
+        success: true,
+        message: 'Contact API is healthy',
+        timestamp: new Date().toISOString(),
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'Database connection failed',
+      },
+      { status: 503 }
+    );
+  }
+}

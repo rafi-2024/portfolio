@@ -40,3 +40,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 public/projects/pension-system/New Bitmap image.bmp
+
+/src/generated/prisma

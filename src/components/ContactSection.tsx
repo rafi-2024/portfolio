@@ -78,22 +78,26 @@ export const ContactSection: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      // Simulate form submission - replace with actual backend call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
 
-      // In production, send to your backend:
-      // const response = await fetch('/api/contact', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(formData),
-      // });
+      const data = await response.json();
 
-      setSubmitStatus('success');
-      setFormData({ name: '', email: '', subject: '', message: '' });
+      if (response.ok && data.success) {
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        setSubmitStatus('error');
+        console.error('Form submission failed:', data.message, data.errors);
+      }
 
       // Reset status after 5 seconds
       setTimeout(() => setSubmitStatus(null), 5000);
-    } catch {
+    } catch (error) {
+      console.error('Error submitting form:', error);
       setSubmitStatus('error');
       setTimeout(() => setSubmitStatus(null), 5000);
     } finally {
