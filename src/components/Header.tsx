@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   AppBar,
   Toolbar,
@@ -29,15 +30,28 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ onThemeToggle, isDarkMode }) => {
+  const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  const navItems = ['About', 'Skills', 'Projects', 'Experience', 'Certifications', 'Contact'];
+  const navItems = ['About', 'Skills', 'Services', 'Projects', 'Experience', 'Certifications', 'Contact'];
 
   const handleNavClick = (id: string) => {
-    const element = document.getElementById(id.toLowerCase());
-    element?.scrollIntoView({ behavior: 'smooth' });
+    const lowerCaseId = id.toLowerCase();
+    
+    if (lowerCaseId === 'services') {
+      router.push('/services');
+    } else {
+      const element = document.getElementById(lowerCaseId);
+      if (element) {
+        // Element exists on current page, scroll to it
+        element.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        // Element doesn't exist on current page, navigate to home with anchor
+        router.push(`/?#${lowerCaseId}`);
+      }
+    }
     setMobileOpen(false);
   };
 

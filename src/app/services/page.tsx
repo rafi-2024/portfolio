@@ -3,15 +3,11 @@
 import React, { useState, useEffect } from 'react';
 import { Box, useTheme } from '@mui/material';
 import { Header } from '@/components/Header';
-import { HeroSection } from '@/components/HeroSection';
-import { SkillsSection } from '@/components/SkillsSection';
-import { ProjectsSection } from '@/components/ProjectsSection';
-import { ExperienceSection } from '@/components/ExperienceSection';
-import { CertificationsSection } from '@/components/CertificationsSection';
+import { ServicesSection } from '@/components/ServicesSection';
 import { ContactSection } from '@/components/ContactSection';
 import { Footer } from '@/components/Footer';
 
-export default function Home() {
+export default function ServicesPage() {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [mounted, setMounted] = useState(false);
   const theme = useTheme();
@@ -62,15 +58,10 @@ export default function Home() {
     >
       <Header onThemeToggle={handleThemeToggle} isDarkMode={isDarkMode} />
       <Box component="main" sx={{ flex: 1, mt: 8 }}>
-        <HeroSection />
-        <SkillsSection />
-        <ProjectsSection />
-        <ExperienceSection />
-        <CertificationsSection />
+        <ServicesSection />
         <ContactSection />
       </Box>
       <Footer />
     </Box>
   );
 }
-
