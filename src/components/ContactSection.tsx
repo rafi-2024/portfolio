@@ -56,7 +56,7 @@ export const ContactSection: React.FC = () => {
     {
       icon: <LocationOnIcon sx={{ fontSize: '2rem' }} />,
       label: 'Location',
-      value: 'Pakistan',
+      value: 'Islamabad, Pakistan',
     },
     {
       icon: <PhoneIcon sx={{ fontSize: '2rem' }} />,

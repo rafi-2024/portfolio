@@ -284,7 +284,7 @@ export const ServicesSection: React.FC = () => {
               }}
             >
               <LanguageIcon sx={{ color: theme.palette.primary.main }} />
-              International Client Delivery
+              Client Delivery
             </Typography>
 
             <Typography
@@ -295,7 +295,7 @@ export const ServicesSection: React.FC = () => {
                 lineHeight: 1.8,
               }}
             >
-              I collaborate with international clients through asynchronous workflows, timezone-aware planning, and milestone-based delivery. You receive clear updates, documented handoffs, and predictable execution from kickoff to launch.
+              I collaborate with clients, all over the world, through asynchronous workflows, timezone-aware planning, and milestone-based delivery. My clients receive clear updates, documented handoffs, and predictable execution from kickoff to launch.
             </Typography>
 
             <List sx={{ py: 0 }}>
