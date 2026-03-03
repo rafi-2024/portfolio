@@ -15,7 +15,7 @@ import {
   useTheme,
   useMediaQuery,
   Chip,
-  CircularProgress,
+  Skeleton,
 } from '@mui/material';
 import {
   CheckCircle as CheckCircleIcon,
@@ -197,14 +197,39 @@ export const ServicesSection: React.FC = () => {
         id="services"
         sx={{
           py: 12,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          minHeight: '500px',
+          minHeight: '700px',
           backgroundColor: theme.palette.background.default,
         }}
       >
-        <CircularProgress />
+        <Container maxWidth="lg">
+          <Box sx={{ textAlign: 'center', mb: 8 }}>
+            <Skeleton variant="text" width={180} height={36} sx={{ mx: 'auto', mb: 2 }} />
+            <Skeleton variant="text" width={420} height={56} sx={{ mx: 'auto', mb: 2 }} />
+            <Skeleton variant="text" width={620} height={30} sx={{ mx: 'auto' }} />
+          </Box>
+
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: { xs: '1fr', md: 'repeat(3, 1fr)' },
+              gap: 4,
+            }}
+          >
+            {Array.from({ length: 3 }).map((_, idx) => (
+              <Card key={idx} sx={{ p: 4, borderRadius: '16px' }}>
+                <Skeleton variant="rounded" width={80} height={80} sx={{ mb: 3, borderRadius: '16px' }} />
+                <Skeleton variant="text" width="65%" height={42} sx={{ mb: 1 }} />
+                <Skeleton variant="text" width="100%" height={26} />
+                <Skeleton variant="text" width="92%" height={26} sx={{ mb: 2 }} />
+                <Skeleton variant="text" width={120} height={48} sx={{ mb: 2 }} />
+                {Array.from({ length: 5 }).map((__, featureIdx) => (
+                  <Skeleton key={featureIdx} variant="text" width="100%" height={24} />
+                ))}
+                <Skeleton variant="rounded" width="100%" height={46} sx={{ mt: 2, borderRadius: '8px' }} />
+              </Card>
+            ))}
+          </Box>
+        </Container>
       </Box>
     );
   }
