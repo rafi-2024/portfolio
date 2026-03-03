@@ -8,6 +8,7 @@ import {
   Divider,
   useTheme,
 } from '@mui/material';
+import NextLink from 'next/link';
 import { FOOTER_NAV_ITEMS } from '@/lib/siteNavigation';
 
 export const Footer: React.FC = () => {
@@ -70,6 +71,7 @@ export const Footer: React.FC = () => {
               {FOOTER_NAV_ITEMS.map((item) => (
                 <Link
                   key={item.href}
+                  component={NextLink}
                   href={item.href}
                   sx={{
                     color: theme.palette.text.secondary,

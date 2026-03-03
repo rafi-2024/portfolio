@@ -16,6 +16,7 @@ import {
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import NextLink from 'next/link';
 import avatar from '../../public/avtar.png';
 
 const MotionBox = motion(Box);
@@ -169,7 +170,7 @@ export const HeroSection: React.FC = () => {
                   variant="contained"
                   size="large"
                   endIcon={<ArrowForwardIcon />}
-                  component="a"
+                  component={NextLink}
                   href="/projects"
                   sx={{
                     px: 4,
@@ -182,7 +183,7 @@ export const HeroSection: React.FC = () => {
                 <Button
                   variant="outlined"
                   size="large"
-                  component="a"
+                  component={NextLink}
                   href="/contact"
                   sx={{
                     px: 4,

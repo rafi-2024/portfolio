@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Box, useTheme } from '@mui/material';
 import { Header } from './Header';
 import { Footer } from './Footer';
@@ -14,28 +14,14 @@ export const SitePageLayout: React.FC<SitePageLayoutProps> = ({
   children,
   mainTopSpacing = 8,
 }) => {
-  const [isDarkMode, setIsDarkMode] = useState(true);
-  const [mounted, setMounted] = useState(false);
   const theme = useTheme();
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme-mode');
-    if (savedTheme === 'light') {
-      setIsDarkMode(false);
-    }
-    setMounted(true);
-  }, []);
+  const isDarkMode = theme.palette.mode === 'dark';
 
   const handleThemeToggle = () => {
     const newDarkMode = !isDarkMode;
-    setIsDarkMode(newDarkMode);
     localStorage.setItem('theme-mode', newDarkMode ? 'dark' : 'light');
     window.dispatchEvent(new Event('theme-mode-change'));
   };
-
-  if (!mounted) {
-    return null;
-  }
 
   return (
     <Box
