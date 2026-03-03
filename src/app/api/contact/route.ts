@@ -1,28 +1,51 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
+interface ContactPayload {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+
+function isObject(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
+}
+
 // Validation helper
-function validateContactData(data: any): { valid: boolean; errors: string[] } {
+function validateContactData(data: unknown): { valid: boolean; errors: string[] } {
   const errors: string[] = [];
 
-  if (!data.name || typeof data.name !== 'string' || data.name.trim().length < 2) {
+  if (!isObject(data)) {
+    return {
+      valid: false,
+      errors: ['Invalid payload'],
+    };
+  }
+
+  const name = data.name;
+  const email = data.email;
+  const subject = data.subject;
+  const message = data.message;
+
+  if (!name || typeof name !== 'string' || name.trim().length < 2) {
     errors.push('Name must be at least 2 characters long');
   }
 
-  if (!data.email || typeof data.email !== 'string') {
+  if (!email || typeof email !== 'string') {
     errors.push('Valid email is required');
   } else {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(data.email)) {
+    if (!emailRegex.test(email)) {
       errors.push('Invalid email format');
     }
   }
 
-  if (!data.subject || typeof data.subject !== 'string' || data.subject.trim().length < 5) {
+  if (!subject || typeof subject !== 'string' || subject.trim().length < 5) {
     errors.push('Subject must be at least 5 characters long');
   }
 
-  if (!data.message || typeof data.message !== 'string' || data.message.trim().length < 10) {
+  if (!message || typeof message !== 'string' || message.trim().length < 10) {
     errors.push('Message must be at least 10 characters long');
   }
 
@@ -33,7 +56,7 @@ function validateContactData(data: any): { valid: boolean; errors: string[] } {
 }
 
 // Trigger n8n webhook
-async function triggerN8nWebhook(contactData: any) {
+async function triggerN8nWebhook(contactData: ContactPayload & { id: string; createdAt: Date }) {
   const webhookUrl = process.env.N8N_WEBHOOK_URL;
   
   if (!webhookUrl) {
@@ -64,7 +87,17 @@ async function triggerN8nWebhook(contactData: any) {
 export async function POST(request: NextRequest) {
   try {
     // Parse request body
-    const body = await request.json();
+    const body: unknown = await request.json();
+    if (!isObject(body)) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Invalid request payload.',
+        },
+        { status: 400 }
+      );
+    }
+
 
     // Validate input
     const validation = validateContactData(body);
@@ -178,7 +211,7 @@ export async function GET() {
       },
       { status: 200 }
     );
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       {
         success: false,
