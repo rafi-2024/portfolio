@@ -8,12 +8,18 @@ import * as path from "path";
 dotenv.config({ path: path.resolve(process.cwd(), ".env.local") });
 dotenv.config({ path: path.resolve(process.cwd(), ".env") });
 
+const databaseUrl = process.env["DATABASE_URL"];
+
+if (!databaseUrl) {
+  throw new Error("DATABASE_URL is required to run Prisma.");
+}
+
 export default defineConfig({
   schema: "prisma/schema.prisma",
   migrations: {
     path: "prisma/migrations",
   },
   datasource: {
-    url: process.env["DATABASE_URL"],
+    url: databaseUrl,
   },
 });

@@ -12,6 +12,26 @@ function isObject(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null;
 }
 
+function toContactPayload(data: Record<string, unknown>): ContactPayload | null {
+  const { name, email, subject, message } = data;
+
+  if (
+    typeof name !== 'string' ||
+    typeof email !== 'string' ||
+    typeof subject !== 'string' ||
+    typeof message !== 'string'
+  ) {
+    return null;
+  }
+
+  return {
+    name,
+    email,
+    subject,
+    message,
+  };
+}
+
 // Validation helper
 function validateContactData(data: unknown): { valid: boolean; errors: string[] } {
   const errors: string[] = [];
@@ -112,12 +132,23 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const typedBody = toContactPayload(body);
+    if (!typedBody) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Invalid request payload.',
+        },
+        { status: 400 }
+      );
+    }
+
     // Sanitize and prepare data
     const contactData = {
-      name: body.name.trim(),
-      email: body.email.trim().toLowerCase(),
-      subject: body.subject.trim(),
-      message: body.message.trim(),
+      name: typedBody.name.trim(),
+      email: typedBody.email.trim().toLowerCase(),
+      subject: typedBody.subject.trim(),
+      message: typedBody.message.trim(),
     };
 
     // Save to database
