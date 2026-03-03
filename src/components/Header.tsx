@@ -23,6 +23,7 @@ import {
   Brightness4 as Brightness4Icon,
   Brightness7 as Brightness7Icon,
 } from '@mui/icons-material';
+import { HEADER_NAV_ITEMS } from '@/lib/siteNavigation';
 
 interface HeaderProps {
   onThemeToggle: () => void;
@@ -35,23 +36,8 @@ export const Header: React.FC<HeaderProps> = ({ onThemeToggle, isDarkMode }) => 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  const navItems = ['About', 'Skills', 'Services', 'Projects', 'Experience', 'Certifications', 'Contact'];
-
-  const handleNavClick = (id: string) => {
-    const lowerCaseId = id.toLowerCase();
-    
-    if (lowerCaseId === 'services') {
-      router.push('/services');
-    } else {
-      const element = document.getElementById(lowerCaseId);
-      if (element) {
-        // Element exists on current page, scroll to it
-        element.scrollIntoView({ behavior: 'smooth' });
-      } else {
-        // Element doesn't exist on current page, navigate to home with anchor
-        router.push(`/?#${lowerCaseId}`);
-      }
-    }
+  const handleNavClick = (href: string) => {
+    router.push(href);
     setMobileOpen(false);
   };
 
@@ -73,9 +59,11 @@ export const Header: React.FC<HeaderProps> = ({ onThemeToggle, isDarkMode }) => 
         <Container maxWidth="lg">
           <Toolbar disableGutters sx={{ justifyContent: 'space-between', minHeight: '70px' }}>
             <Box
+              onClick={() => router.push('/')}
               sx={{
                 fontSize: '1.5rem',
                 fontWeight: 700,
+                cursor: 'pointer',
                 background: isDarkMode
                   ? 'linear-gradient(135deg, #00D4FF 0%, #1E88E5 100%)'
                   : 'linear-gradient(135deg, #7C3AED 0%, #B794F6 100%)',
@@ -90,10 +78,10 @@ export const Header: React.FC<HeaderProps> = ({ onThemeToggle, isDarkMode }) => 
 
             {!isMobile && (
               <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-                {navItems.map((item) => (
+                {HEADER_NAV_ITEMS.map((item) => (
                   <Button
-                    key={item}
-                    onClick={() => handleNavClick(item)}
+                    key={item.href}
+                    onClick={() => handleNavClick(item.href)}
                     sx={{
                       color: theme.palette.text.primary,
                       fontSize: '0.95rem',
@@ -116,7 +104,7 @@ export const Header: React.FC<HeaderProps> = ({ onThemeToggle, isDarkMode }) => 
                       },
                     }}
                   >
-                    {item}
+                    {item.label}
                   </Button>
                 ))}
               </Box>
@@ -180,10 +168,10 @@ export const Header: React.FC<HeaderProps> = ({ onThemeToggle, isDarkMode }) => 
           </Box>
           <Divider sx={{ borderColor: isDarkMode ? 'rgba(0, 212, 255, 0.2)' : 'rgba(124, 58, 237, 0.2)' }} />
           <List>
-            {navItems.map((item) => (
-              <ListItem key={item} disablePadding>
+            {HEADER_NAV_ITEMS.map((item) => (
+              <ListItem key={item.href} disablePadding>
                 <ListItemButton
-                  onClick={() => handleNavClick(item)}
+                  onClick={() => handleNavClick(item.href)}
                   sx={{
                     color: theme.palette.text.primary,
                     '&:hover': {
@@ -193,7 +181,7 @@ export const Header: React.FC<HeaderProps> = ({ onThemeToggle, isDarkMode }) => 
                     },
                   }}
                 >
-                  <ListItemText primary={item} />
+                  <ListItemText primary={item.label} />
                 </ListItemButton>
               </ListItem>
             ))}

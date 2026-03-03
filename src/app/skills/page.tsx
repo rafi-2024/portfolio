@@ -1,15 +1,13 @@
 'use client';
 
 import React from 'react';
-import { HeroSection } from '@/components/HeroSection';
+import { SkillsSection } from '@/components/SkillsSection';
 import { SitePageLayout } from '@/components/SitePageLayout';
 
-export default function Home() {
-
+export default function SkillsPage() {
   return (
     <SitePageLayout>
-      <HeroSection />
+      <SkillsSection />
     </SitePageLayout>
   );
 }
-

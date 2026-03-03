@@ -8,6 +8,7 @@ import {
   Divider,
   useTheme,
 } from '@mui/material';
+import { FOOTER_NAV_ITEMS } from '@/lib/siteNavigation';
 
 export const Footer: React.FC = () => {
   const theme = useTheme();
@@ -66,10 +67,10 @@ export const Footer: React.FC = () => {
 
             {/* Quick Links */}
             <Stack direction="row" spacing={3}>
-              {['About', 'Skills', 'Projects', 'Experience', 'Contact'].map((item) => (
+              {FOOTER_NAV_ITEMS.map((item) => (
                 <Link
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
+                  key={item.href}
+                  href={item.href}
                   sx={{
                     color: theme.palette.text.secondary,
                     textDecoration: 'none',
@@ -80,7 +81,7 @@ export const Footer: React.FC = () => {
                     },
                   }}
                 >
-                  {item}
+                  {item.label}
                 </Link>
               ))}
             </Stack>

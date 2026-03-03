@@ -18,18 +18,22 @@ export default function RootLayout({
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // Load theme preference from localStorage
-    const savedTheme = localStorage.getItem('theme-mode');
-    if (savedTheme === 'light') {
-      setIsDarkMode(false);
-    }
-    setMounted(true);
-  }, []);
+    const syncThemeFromStorage = () => {
+      const savedTheme = localStorage.getItem('theme-mode');
+      setIsDarkMode(savedTheme !== 'light');
+    };
 
-  const handleThemeChange = (isDark: boolean) => {
-    setIsDarkMode(isDark);
-    localStorage.setItem('theme-mode', isDark ? 'dark' : 'light');
-  };
+    syncThemeFromStorage();
+    setMounted(true);
+
+    window.addEventListener('storage', syncThemeFromStorage);
+    window.addEventListener('theme-mode-change', syncThemeFromStorage);
+
+    return () => {
+      window.removeEventListener('storage', syncThemeFromStorage);
+      window.removeEventListener('theme-mode-change', syncThemeFromStorage);
+    };
+  }, []);
 
   // Avoid hydration mismatch
   if (!mounted) {
@@ -61,9 +65,7 @@ export default function RootLayout({
       <body className="antialiased">
         <ThemeProvider theme={isDarkMode ? darkTheme : wisteriaTheme}>
           <CssBaseline />
-          {children && typeof children === 'object' && 'props' in children
-            ? React.cloneElement(children as React.ReactElement<{onThemeChange?: (isDark: boolean) => void}>, { onThemeChange: handleThemeChange })
-            : children}
+          {children}
         </ThemeProvider>
       </body>
     </html>

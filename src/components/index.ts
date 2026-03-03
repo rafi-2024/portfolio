@@ -4,5 +4,7 @@ export { SkillsSection } from './SkillsSection';
 export { ServicesSection } from './ServicesSection';
 export { ProjectsSection } from './ProjectsSection';
 export { ExperienceSection } from './ExperienceSection';
+export { CertificationsSection } from './CertificationsSection';
 export { ContactSection } from './ContactSection';
 export { Footer } from './Footer';
+export { SitePageLayout } from './SitePageLayout';

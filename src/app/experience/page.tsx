@@ -1,15 +1,13 @@
 'use client';
 
 import React from 'react';
-import { HeroSection } from '@/components/HeroSection';
+import { ExperienceSection } from '@/components/ExperienceSection';
 import { SitePageLayout } from '@/components/SitePageLayout';
 
-export default function Home() {
-
+export default function ExperiencePage() {
   return (
     <SitePageLayout>
-      <HeroSection />
+      <ExperienceSection />
     </SitePageLayout>
   );
 }
-

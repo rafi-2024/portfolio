@@ -169,7 +169,8 @@ export const HeroSection: React.FC = () => {
                   variant="contained"
                   size="large"
                   endIcon={<ArrowForwardIcon />}
-                  onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+                  component="a"
+                  href="/projects"
                   sx={{
                     px: 4,
                     py: 1.5,
@@ -181,7 +182,8 @@ export const HeroSection: React.FC = () => {
                 <Button
                   variant="outlined"
                   size="large"
-                  onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                  component="a"
+                  href="/contact"
                   sx={{
                     px: 4,
                     py: 1.5,

@@ -22,7 +22,9 @@ import {
   Rocket as RocketIcon,
   Business as BusinessIcon,
   Star as StarIcon,
+  Language as LanguageIcon,
 } from '@mui/icons-material';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 
 const MotionCard = motion(Card);
@@ -126,6 +128,7 @@ const fallbackPackages = [
 export const ServicesSection: React.FC = () => {
   const [packages, setPackages] = useState<ServicePackageUI[]>([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -180,7 +183,11 @@ export const ServicesSection: React.FC = () => {
 
   const handleContactClick = () => {
     const element = document.getElementById('contact');
-    element?.scrollIntoView({ behavior: 'smooth' });
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+    router.push('/contact');
   };
 
   if (loading) {
@@ -263,6 +270,67 @@ export const ServicesSection: React.FC = () => {
           >
             Choose the perfect package that fits your business needs. All packages include source code ownership and transparent communication.
           </Typography>
+
+          <Box
+            sx={{
+              mt: 4,
+              mx: 'auto',
+              maxWidth: '820px',
+              p: 3,
+              borderRadius: 3,
+              border: `1px solid ${theme.palette.primary.main}33`,
+              backgroundColor: `${theme.palette.primary.main}0D`,
+              textAlign: 'left',
+            }}
+          >
+            <Typography
+              variant="h5"
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1,
+                fontWeight: 700,
+                color: theme.palette.text.primary,
+                mb: 1.5,
+              }}
+            >
+              <LanguageIcon sx={{ color: theme.palette.primary.main }} />
+              International Client Delivery
+            </Typography>
+
+            <Typography
+              variant="body2"
+              sx={{
+                color: theme.palette.text.secondary,
+                mb: 2,
+                lineHeight: 1.8,
+              }}
+            >
+              I collaborate with international clients through asynchronous workflows, timezone-aware planning, and milestone-based delivery. You receive clear updates, documented handoffs, and predictable execution from kickoff to launch.
+            </Typography>
+
+            <List sx={{ py: 0 }}>
+              {[
+                'Timezone-friendly communication windows and weekly progress updates',
+                'Structured delivery in milestones with demos and acceptance checkpoints',
+                'Clean documentation and code handover for distributed teams',
+                'Remote-first collaboration with transparent scope, timeline, and costs',
+              ].map((point) => (
+                <ListItem key={point} sx={{ py: 0.5, px: 0 }}>
+                  <ListItemIcon sx={{ minWidth: 32 }}>
+                    <CheckCircleIcon sx={{ color: theme.palette.primary.main, fontSize: '1.1rem' }} />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={point}
+                    primaryTypographyProps={{
+                      fontSize: '0.95rem',
+                      color: theme.palette.text.primary,
+                    }}
+                  />
+                </ListItem>
+              ))}
+            </List>
+          </Box>
         </Box>
 
         <Box
@@ -279,7 +347,7 @@ export const ServicesSection: React.FC = () => {
           whileInView="visible"
           viewport={{ once: true, margin: '-100px' }}
         >
-          {packages.map((pkg, index) => (
+          {packages.map((pkg) => (
             <MotionCard
               key={pkg.name}
               variants={itemVariants}
