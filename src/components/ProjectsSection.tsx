@@ -21,6 +21,7 @@ import {
 } from '@mui/icons-material';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import { GridItemsSkeleton } from './SkeletonLoaders';
 
 const MotionCard = motion.create(Card);
 
@@ -421,6 +422,13 @@ export const ProjectsSection: React.FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [flipped, setFlipped] = useState<{ [key: string]: boolean }>({});
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    // Simulate loading delay for demo; in production, replace with actual fetch
+    const timer = setTimeout(() => setLoading(false), 500);
+    return () => clearTimeout(timer);
+  }, []);
 
   const toggleFlip = (projectId: string) => {
     setFlipped((prev) => ({
