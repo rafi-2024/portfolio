@@ -25,6 +25,7 @@ import {
   EmojiEvents as TrophyIcon,
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
+import { GridItemsSkeleton } from './SkeletonLoaders';
 
 const MotionCard = motion(Card);
 
@@ -74,8 +75,15 @@ const experiences: Experience[] = [
 ];
 
 export const ExperienceSection: React.FC = () => {
+  const [loading, setLoading] = React.useState(true);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+  React.useEffect(() => {
+    // Simulate loading delay for demo; in production, replace with actual fetch
+    const timer = setTimeout(() => setLoading(false), 500);
+    return () => clearTimeout(timer);
+  }, []);
 
   const getIcon = (type: string) => {
     switch (type) {
@@ -98,6 +106,14 @@ export const ExperienceSection: React.FC = () => {
       transition: { duration: 0.6 },
     },
   };
+
+  if (loading) {
+    return (
+      <Box component="section" id="experience" sx={{ py: 12 }}>
+        <GridItemsSkeleton count={4} columns={{ xs: 1, md: 2 }} />
+      </Box>
+    );
+  }
 
   return (
     <Box

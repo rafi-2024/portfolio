@@ -429,6 +429,14 @@ export const ProjectsSection: React.FC = () => {
     }));
   };
 
+  if (loading) {
+    return (
+      <Box component="section" id="projects" sx={{ py: 12 }}>
+        <GridItemsSkeleton count={3} columns={{ xs: 1, md: 3 }} />
+      </Box>
+    );
+  }
+
   return (
     <Box
       component="section"

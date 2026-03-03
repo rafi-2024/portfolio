@@ -13,6 +13,7 @@ import {
   LinkedIn as LinkedInIcon,
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
+import { SectionContentSkeleton } from './SkeletonLoaders';
 
 const MotionStack = motion(Stack);
 
@@ -23,8 +24,15 @@ interface Certification {
 }
 
 export const CertificationsSection: React.FC = () => {
+  const [loading, setLoading] = React.useState(true);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+  React.useEffect(() => {
+    // Simulate loading delay for demo; in production, replace with actual fetch
+    const timer = setTimeout(() => setLoading(false), 300);
+    return () => clearTimeout(timer);
+  }, []);
 
   const certifications: Certification[] = [
     {
@@ -73,6 +81,14 @@ export const CertificationsSection: React.FC = () => {
       transition: { duration: 0.4 },
     },
   };
+
+  if (loading) {
+    return (
+      <Box component="section" id="certifications" sx={{ py: 12 }}>
+        <SectionContentSkeleton lines={5} />
+      </Box>
+    );
+  }
 
   return (
     <Box

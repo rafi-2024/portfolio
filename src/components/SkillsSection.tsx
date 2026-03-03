@@ -17,6 +17,7 @@ import {
   Settings as ToolsIcon,
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
+import { SectionContentSkeleton } from './SkeletonLoaders';
 
 const MotionCard = motion(Card);
 
@@ -55,8 +56,15 @@ const skillCategories: SkillCategory[] = [
 ];
 
 export const SkillsSection: React.FC = () => {
+  const [loading, setLoading] = React.useState(true);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+  React.useEffect(() => {
+    // Simulate loading delay for demo; in production, replace with actual fetch
+    const timer = setTimeout(() => setLoading(false), 500);
+    return () => clearTimeout(timer);
+  }, []);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -77,6 +85,14 @@ export const SkillsSection: React.FC = () => {
       transition: { duration: 0.6 },
     },
   };
+
+  if (loading) {
+    return (
+      <Box component="section" id="skills" sx={{ py: 12 }}>
+        <SectionContentSkeleton lines={8} />
+      </Box>
+    );
+  }
 
   return (
     <Box
