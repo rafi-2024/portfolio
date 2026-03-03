@@ -13,6 +13,15 @@ A modern, full-stack portfolio website built with Next.js 15, featuring a contac
 - 📱 **Responsive Design**: Mobile-first approach with Tailwind CSS
 - ⚡ **Next.js 15**: Built with the latest Next.js features and Turbopack
 
+## 📝 Recent Updates (2026-03-03)
+
+- ✅ Switched from mixed hash/path navigation to dedicated path-based routes
+- ✅ Added section pages: `/about`, `/skills`, `/services`, `/projects`, `/experience`, `/certifications`, `/contact`
+- ✅ Unified header/footer navigation with shared route config (`src/lib/siteNavigation.ts`)
+- ✅ Fixed global theme toggling so full-page theme updates across all routes
+- ✅ Enhanced Services content for international clients (timezone-friendly delivery, milestone-based execution, documentation handoff)
+- ✅ Updated documentation to match the new route architecture
+
 ## 🛠️ Tech Stack
 
 ### Frontend
