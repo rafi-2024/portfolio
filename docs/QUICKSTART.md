@@ -74,13 +74,25 @@ Follow the detailed guide: [N8N_WORKFLOW_GUIDE.md](./N8N_WORKFLOW_GUIDE.md)
 
 ### 5. Test the Contact Form
 
-1. Navigate to http://localhost:3000/#contact
+1. Navigate to http://localhost:3000/contact
 2. Fill out the form
 3. Submit
 4. Check:
    - Form shows success message
    - Email arrives in your inbox
    - Database entry created (view in Prisma Studio)
+
+### 6. Verify Multi-Page Navigation
+
+Open these routes to confirm section pages are accessible:
+
+- http://localhost:3000/about
+- http://localhost:3000/skills
+- http://localhost:3000/services
+- http://localhost:3000/projects
+- http://localhost:3000/experience
+- http://localhost:3000/certifications
+- http://localhost:3000/contact
 
 ---
 

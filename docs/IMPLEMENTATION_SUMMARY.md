@@ -185,12 +185,20 @@ npm run dev
 5. Activate workflow
 
 ### 6. Test Everything
-1. Open http://localhost:3000/#contact
+1. Open http://localhost:3000/contact
 2. Submit contact form
 3. Verify:
    - ✅ Form submission succeeds
    - ✅ Email received
    - ✅ Database entry created (check at http://localhost:5555 via `npm run prisma:studio`)
+
+Optional route checks:
+- ✅ http://localhost:3000/about
+- ✅ http://localhost:3000/skills
+- ✅ http://localhost:3000/services
+- ✅ http://localhost:3000/projects
+- ✅ http://localhost:3000/experience
+- ✅ http://localhost:3000/certifications
 
 ---
 

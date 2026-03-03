@@ -74,13 +74,22 @@ personalwebsite/
 │   │   ├── api/
 │   │   │   └── contact/
 │   │   │       └── route.ts         # Contact form API endpoint
+│   │   ├── about/                    # About page route
+│   │   ├── skills/                   # Skills page route
+│   │   ├── services/                 # Services page route
+│   │   ├── projects/                 # Projects page route
+│   │   ├── experience/               # Experience page route
+│   │   ├── certifications/           # Certifications page route
+│   │   ├── contact/                  # Contact page route
 │   │   ├── layout.tsx
 │   │   └── page.tsx
 │   ├── components/
 │   │   ├── ContactSection.tsx       # Contact form component
+│   │   ├── SitePageLayout.tsx       # Shared page shell
 │   │   └── ...
 │   └── lib/
-│       └── prisma.ts                # Prisma client singleton
+│       ├── prisma.ts                # Prisma client singleton
+│       └── siteNavigation.ts        # Shared route navigation config
 ├── prisma/
 │   └── schema.prisma                # Database schema
 ├── scripts/
@@ -164,6 +173,15 @@ npm run dev
 ```
 
 Visit: http://localhost:3000
+
+Recommended route checks:
+- http://localhost:3000/about
+- http://localhost:3000/skills
+- http://localhost:3000/services
+- http://localhost:3000/projects
+- http://localhost:3000/experience
+- http://localhost:3000/certifications
+- http://localhost:3000/contact
 
 ---
 

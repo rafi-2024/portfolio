@@ -84,6 +84,12 @@ Comprehensive documentation is available in the [docs](docs/) directory:
 
 ## 🎯 Key Features Explained
 
+### Multi-Page Navigation
+- Dedicated section routes for easier direct linking and sharing
+- Header navigation available across all pages
+- Footer keeps a focused set of quick links
+- Core routes: `/about`, `/skills`, `/services`, `/projects`, `/experience`, `/certifications`, `/contact`
+
 ### Contact Form with Database
 - Full-stack contact form with validation
 - PostgreSQL database storage via Prisma
@@ -147,15 +153,24 @@ personalwebsite/
 │   ├── app/
 │   │   ├── api/
 │   │   │   └── contact/         # Contact form API endpoint
+│   │   ├── about/               # About page route
+│   │   ├── skills/              # Skills page route
+│   │   ├── services/            # Services page route
+│   │   ├── projects/            # Projects page route
+│   │   ├── experience/          # Experience page route
+│   │   ├── certifications/      # Certifications page route
+│   │   ├── contact/             # Contact page route
 │   │   ├── globals.css
 │   │   ├── layout.tsx
 │   │   └── page.tsx
 │   ├── components/              # React components
 │   │   ├── ContactSection.tsx   # Contact form component
 │   │   ├── HeroSection.tsx
+│   │   ├── SitePageLayout.tsx   # Shared page shell (header/main/footer)
 │   │   └── ...
 │   ├── lib/
-│   │   └── prisma.ts           # Prisma client singleton
+│   │   ├── prisma.ts            # Prisma client singleton
+│   │   └── siteNavigation.ts    # Shared route navigation config
 │   └── theme.ts
 ├── prisma/
 │   ├── schema.prisma           # Database schema
