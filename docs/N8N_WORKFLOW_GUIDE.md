@@ -2,6 +2,12 @@
 
 This guide explains how to set up the n8n workflow to handle contact form submissions and send email notifications.
 
+## Routing Note
+
+- The n8n integration is triggered by the backend API endpoint `/api/contact`.
+- UI navigation is now path-based (for example: `/about`, `/services`, `/contact`) instead of hash navigation.
+- This routing change does not alter webhook behavior as long as `N8N_WEBHOOK_URL` is configured correctly.
+
 ## Prerequisites
 
 - Docker and Docker Compose installed
@@ -143,7 +149,7 @@ curl -X POST http://localhost:5678/webhook/contact-form \
 ### 4.2. Test via Contact Form
 
 1. Make sure your Next.js app is running
-2. Navigate to `http://localhost:3000/#contact`
+2. Navigate to `http://localhost:3000/contact`
 3. Fill out and submit the contact form
 4. Verify:
    - Form submission succeeds
