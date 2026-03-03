@@ -62,7 +62,7 @@ export const SkillsSection: React.FC = () => {
 
   React.useEffect(() => {
     // Simulate loading delay for demo; in production, replace with actual fetch
-    const timer = setTimeout(() => setLoading(false), 500);
+    const timer = setTimeout(() => setLoading(false), 300);
     return () => clearTimeout(timer);
   }, []);
 
