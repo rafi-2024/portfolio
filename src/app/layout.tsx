@@ -7,6 +7,9 @@ import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { darkTheme, wisteriaTheme } from "@/theme";
 
+// The stylesheet is loaded by Next.js at runtime; its type declaration is
+// provided by the framework rather than TypeScript.
+// @ts-expect-error: CSS side-effect imports are handled by Next.js.
 import "./globals.css";
 
 export default function RootLayout({
@@ -56,10 +59,12 @@ export default function RootLayout({
 
   return (
     <html lang="en" className="scroll-smooth">
+
       <head>
         <title>Rafi Ullah | Full Stack Developer</title>
         <meta name="description" content="Professional portfolio of Rafi Ullah, Full Stack Developer specializing in React, Node.js, and Python." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="google-site-verification" content="VRft28r9JP6A5Y6ds9cCUMlyPANlP_RipJ9f395PPWs" />
         <meta name="keywords" content="full stack developer, react developer, node.js, python, web development" />
       </head>
       <body className="antialiased">
