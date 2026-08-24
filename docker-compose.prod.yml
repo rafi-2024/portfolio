@@ -78,9 +78,9 @@ services:
     restart: always
     environment:
       - DATABASE_URL=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-changeme}@postgres:5432/${POSTGRES_DB:-portfolio_db}?schema=public
-      - N8N_WEBHOOK_URL=http://n8n:5678/webhook/contact-form
+      - N8N_WEBHOOK_URL=${N8N_WEBHOOK_URL:-https://your-n8n-service.onrender.com/webhook/contact-form}
       - NODE_ENV=production
-      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://localhost:3000}
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-https://portfolio-o0m8.onrender.com}
     ports:
       - "${APP_PORT:-3000}:3000"
     depends_on:
@@ -91,7 +91,7 @@ services:
     networks:
       - portfolio-prod-network
     healthcheck:
-      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/api/contact', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/api/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
       interval: 30s
       timeout: 10s
       retries: 3
