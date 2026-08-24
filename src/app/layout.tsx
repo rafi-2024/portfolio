@@ -40,21 +40,29 @@ export default function RootLayout({
       <html lang="en" className="scroll-smooth">
         <head>
           <title>Rafi Ullah | Full Stack Developer</title>
+
           <meta
             name="description"
             content="Professional portfolio of Rafi Ullah, Full Stack Developer specializing in React, Node.js, and Python."
           />
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1"
+          />
+
+          <meta
+            name="keywords"
+            content="full stack developer, react developer, node.js, python, web development"
+          />
+
           <script
             src="https://analytics.ahrefs.com/analytics.js"
             data-key="jwcG+6vAy8g2eJEOBukXAQ"
             async
           ></script>
-          <meta
-            name="keywords"
-            content="full stack developer, react developer, node.js, python, web development"
-          />
         </head>
+
         <body className="antialiased">
           <ThemeProvider theme={darkTheme}>
             <CssBaseline />
@@ -68,28 +76,33 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <head>
         <title>Rafi Ullah | Full Stack Developer</title>
+
         <meta
           name="description"
           content="Professional portfolio of Rafi Ullah, Full Stack Developer specializing in React, Node.js, and Python."
         />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1"
+        />
+
         <meta
           name="google-site-verification"
           content="VRft28r9JP6A5Y6ds9cCUMlyPANlP_RipJ9f395PPWs"
         />
+
         <meta
           name="keywords"
           content="full stack developer, react developer, node.js, python, web development"
         />
+
+        <script
+          src="https://analytics.ahrefs.com/analytics.js"
+          data-key="jwcG+6vAy8g2eJEOBukXAQ"
+          async
+        ></script>
       </head>
-      <script>
-        var ahrefs_analytics_script = document.createElement('script');
-        ahrefs_analytics_script.async = true; ahrefs_analytics_script.src =
-        'https://analytics.ahrefs.com/analytics.js';
-        ahrefs_analytics_script.setAttribute('data-key',
-        'jwcG+6vAy8g2eJEOBukXAQ');
-        document.getElementsByTagName('head')[0].appendChild(ahrefs_analytics_script);
-      </script>
 
       <body className="antialiased">
         <ThemeProvider theme={isDarkMode ? darkTheme : wisteriaTheme}>
