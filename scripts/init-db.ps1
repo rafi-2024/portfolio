@@ -79,13 +79,13 @@ Write-Host ""
 Write-Host "📊 Database Information:" -ForegroundColor Yellow
 $env:PGPASSWORD = $DB_PASSWORD
 psql -h $DB_HOST -p $DB_PORT -U $DB_USER -d $DB_NAME -c @"
-    SELECT 
-        schemaname as schema,
-        tablename as table,
-        pg_size_pretty(pg_total_relation_size(schemaname||'.'||tablename)) as size
-    FROM pg_tables 
-    WHERE schemaname = 'public'
-    ORDER BY pg_total_relation_size(schemaname||'.'||tablename) DESC;
+SELECT 
+    schemaname as schema,
+    tablename as table,
+    pg_size_pretty(pg_total_relation_size(schemaname||'.'||tablename)) as size
+FROM pg_tables 
+WHERE schemaname = 'public'
+ORDER BY pg_total_relation_size(schemaname||'.'||tablename) DESC;
 "@ 2>$null
 
 Write-Host ""

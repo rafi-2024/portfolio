@@ -8,7 +8,7 @@ services:
     restart: always
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set}
       POSTGRES_DB: ${POSTGRES_DB:-portfolio_db}
       PGDATA: /var/lib/postgresql/data/pgdata
     ports:
@@ -44,7 +44,7 @@ services:
       - WEBHOOK_URL=${N8N_WEBHOOK_URL:-http://localhost:5678/}
       - N8N_BASIC_AUTH_ACTIVE=${N8N_BASIC_AUTH_ACTIVE:-true}
       - N8N_BASIC_AUTH_USER=${N8N_BASIC_AUTH_USER:-admin}
-      - N8N_BASIC_AUTH_PASSWORD=${N8N_BASIC_AUTH_PASSWORD:-changeme}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_BASIC_AUTH_PASSWORD:?N8N_BASIC_AUTH_PASSWORD must be set}
       - EXECUTIONS_DATA_SAVE_ON_ERROR=all
       - EXECUTIONS_DATA_SAVE_ON_SUCCESS=all
       - EXECUTIONS_DATA_SAVE_MANUAL_EXECUTIONS=true
@@ -77,8 +77,8 @@ services:
     container_name: portfolio-app-prod
     restart: always
     environment:
-      - DATABASE_URL=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-changeme}@postgres:5432/${POSTGRES_DB:-portfolio_db}?schema=public
-      - N8N_WEBHOOK_URL=${N8N_WEBHOOK_URL:-https://your-n8n-service.onrender.com/webhook/contact-form}
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set}@postgres:5432/${POSTGRES_DB:-portfolio_db}?schema=public
+      - N8N_WEBHOOK_URL=${N8N_WEBHOOK_URL:?N8N_WEBHOOK_URL must be set}
       - NODE_ENV=production
       - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-https://portfolio-o0m8.onrender.com}
     ports:
