@@ -1,0 +1,4 @@
+interface:
+  display_name: "UI/UX Design"
+  short_description: "Improve payroll ERP interfaces."
+  default_prompt: "Use this skill to design or refine a payroll ERP interface change with clear workflows, accessible states, responsive layout, and visual consistency."
