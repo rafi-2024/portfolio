@@ -43,13 +43,13 @@ cp .env.example .env.local
 # Step 4: Start PostgreSQL and n8n
 npm run docker:dev
 
-# Step 5: Wait 30 seconds for services to start, then initialize database
-npm run prisma:migrate
+# Step 5: Wait for PostgreSQL, apply migrations, and generate Prisma Client
+# Windows
+npm run db:init
+# macOS/Linux
+npm run db:init:bash
 
-# Step 6: Generate Prisma Client
-npm run prisma:generate
-
-# Step 7: Start development server
+# Step 6: Start development server
 npm run dev
 ```
 

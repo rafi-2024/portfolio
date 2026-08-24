@@ -25,7 +25,7 @@ A modern, full-stack portfolio website built with Next.js 15, featuring a contac
 ## 🛠️ Tech Stack
 
 ### Frontend
-- **Framework**: Next.js 15.1.1 with React 19
+- **Framework**: Next.js 15.5.23 with React 19
 - **UI Library**: Material-UI (MUI) 7.3.8
 - **Styling**: Tailwind CSS 3.4.1 + Emotion
 - **Animations**: Framer Motion 12.34.3
@@ -34,7 +34,7 @@ A modern, full-stack portfolio website built with Next.js 15, featuring a contac
 ### Backend
 - **API**: Next.js API Routes
 - **Database**: PostgreSQL 16
-- **ORM**: Prisma 7.4.2
+- **ORM**: Prisma 6.19.2
 - **Automation**: n8n (workflow engine)
 
 ### DevOps
@@ -153,6 +153,9 @@ npm run docker:prod:logs       # View production logs
 npm run lint                   # Run ESLint
 npm run docker:clean           # Remove all Docker volumes and containers
 ```
+
+On Windows, use `npm run db:init` to wait for PostgreSQL, apply migrations, and
+generate the Prisma Client. On macOS/Linux, use `npm run db:init:bash`.
 
 ## 🗂️ Project Structure
 
