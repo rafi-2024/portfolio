@@ -47,7 +47,8 @@ $defaults = @{
 }
 
 foreach ($entry in $defaults.GetEnumerator()) {
-    if ([string]::IsNullOrWhiteSpace((Get-EnvValue $entry.Key))) {
+    $currentValue = Get-EnvValue $entry.Key
+    if ([string]::IsNullOrWhiteSpace($currentValue) -or ($entry.Key -eq 'N8N_WEBHOOK_URL' -and $currentValue -like 'https://your-n8n-service*')) {
         Set-EnvValue $entry.Key $entry.Value
     }
 }
