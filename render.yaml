@@ -5,7 +5,7 @@ services:
     plan: starter
     dockerfilePath: ./Dockerfile
     dockerContext: .
-    preDeployCommand: npx prisma migrate deploy
+    preDeployCommand: ./node_modules/.bin/prisma migrate deploy
     healthCheckPath: /api/health
     autoDeployTrigger: commit
     envVars:
