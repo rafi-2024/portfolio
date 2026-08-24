@@ -86,7 +86,8 @@ SELECT
 FROM pg_tables 
 WHERE schemaname = 'public'
 ORDER BY pg_total_relation_size(schemaname||'.'||tablename) DESC;
-"@ 2>$null
+"@
+2>$null
 
 Write-Host ""
 Write-Host "==========================================" -ForegroundColor Green

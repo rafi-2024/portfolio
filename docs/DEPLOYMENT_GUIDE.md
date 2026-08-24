@@ -214,14 +214,14 @@ DATABASE_URL=postgresql://postgres:CHANGE_THIS_SECURE_PASSWORD@postgres:5432/por
 ### Step 2: Build and Deploy
 
 ```bash
-# Build production images
-npm run docker:prod:build
+# Build production images with the production environment file
+docker compose --env-file .env.production -f docker-compose.prod.yml up -d --build
 
 # View logs
-npm run docker:prod:logs
+docker compose --env-file .env.production -f docker-compose.prod.yml logs -f
 
 # Check status
-docker ps
+docker compose --env-file .env.production -f docker-compose.prod.yml ps
 ```
 
 ### Step 3: Initialize Production Database

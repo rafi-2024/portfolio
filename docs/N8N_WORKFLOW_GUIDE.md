@@ -22,7 +22,7 @@ Start all services including n8n:
 docker-compose up -d
 
 # Production
-docker-compose -f docker-compose.prod.yml up -d
+docker compose --env-file .env.production -f docker-compose.prod.yml up -d
 ```
 
 ## Step 2: Access n8n Interface
