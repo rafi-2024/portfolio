@@ -64,6 +64,8 @@ COPY --from=builder /app/.next/static ./.next/static
 # Copy Prisma generated client and schema
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
+COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
+COPY --from=builder /app/node_modules/.bin ./node_modules/.bin
 COPY --from=builder /app/prisma ./prisma
 
 # Set ownership
@@ -74,11 +76,10 @@ USER nextjs
 
 EXPOSE 3000
 
-ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
 # Health check using curl
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-  CMD curl -f http://localhost:3000/api/contact || exit 1
+  CMD curl -f "http://localhost:${PORT:-3000}/api/health" || exit 1
 
 CMD ["node", "server.js"]
