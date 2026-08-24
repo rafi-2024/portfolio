@@ -8,6 +8,13 @@ interface ContactPayload {
   message: string;
 }
 
+const FIELD_LIMITS = {
+  name: 100,
+  email: 320,
+  subject: 200,
+  message: 10_000,
+} as const;
+
 function isObject(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null;
 }
@@ -48,11 +55,16 @@ function validateContactData(data: unknown): { valid: boolean; errors: string[] 
   const subject = data.subject;
   const message = data.message;
 
-  if (!name || typeof name !== 'string' || name.trim().length < 2) {
+  if (
+    !name ||
+    typeof name !== 'string' ||
+    name.trim().length < 2 ||
+    name.trim().length > FIELD_LIMITS.name
+  ) {
     errors.push('Name must be at least 2 characters long');
   }
 
-  if (!email || typeof email !== 'string') {
+  if (!email || typeof email !== 'string' || email.trim().length > FIELD_LIMITS.email) {
     errors.push('Valid email is required');
   } else {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -61,11 +73,21 @@ function validateContactData(data: unknown): { valid: boolean; errors: string[] 
     }
   }
 
-  if (!subject || typeof subject !== 'string' || subject.trim().length < 5) {
+  if (
+    !subject ||
+    typeof subject !== 'string' ||
+    subject.trim().length < 5 ||
+    subject.trim().length > FIELD_LIMITS.subject
+  ) {
     errors.push('Subject must be at least 5 characters long');
   }
 
-  if (!message || typeof message !== 'string' || message.trim().length < 10) {
+  if (
+    !message ||
+    typeof message !== 'string' ||
+    message.trim().length < 10 ||
+    message.trim().length > FIELD_LIMITS.message
+  ) {
     errors.push('Message must be at least 10 characters long');
   }
 
@@ -163,7 +185,6 @@ export async function POST(request: NextRequest) {
         {
           success: false,
           message: 'Database error. Please try again later.',
-          error: dbError instanceof Error ? dbError.message : 'Unknown database error',
         },
         { status: 503 }
       );
@@ -221,7 +242,6 @@ export async function POST(request: NextRequest) {
       {
         success: false,
         message: 'An unexpected error occurred. Please try again later.',
-        error: error instanceof Error ? error.message : 'Unknown error',
       },
       { status: 500 }
     );
