@@ -193,9 +193,14 @@ Create `.env.production`:
 
 ```bash
 cp .env.production.example .env.production
+npm run env:production:prepare
 ```
 
-**Important:** Update all passwords and secrets!
+The preparation command preserves existing values and generates cryptographically
+random values for missing PostgreSQL and n8n passwords. Keep `.env.production`
+private; it is excluded by `.gitignore`. For Render, configure the `sync: false`
+value for `N8N_WEBHOOK_URL` in the Render dashboard instead of using the local
+Docker webhook URL.
 
 ```env
 # PostgreSQL

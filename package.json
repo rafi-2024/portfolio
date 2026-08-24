@@ -13,6 +13,7 @@
     "prisma:studio": "prisma studio",
     "prisma:push": "prisma db push",
     "prisma:reset": "prisma migrate reset",
+    "env:production:prepare": "powershell -ExecutionPolicy Bypass -File ./scripts/prepare-production-env.ps1",
     "db:init": "powershell -ExecutionPolicy Bypass -File ./scripts/init-db.ps1",
     "db:init:bash": "bash scripts/init-db.sh",
     "docker:dev": "docker-compose up -d",

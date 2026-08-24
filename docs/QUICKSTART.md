@@ -37,6 +37,9 @@ npm install
 # Step 2: Copy environment variables
 cp .env.example .env.local
 
+# For the local production Docker stack, generate missing secure secrets
+npm run env:production:prepare
+
 # Step 3: Start Docker Desktop (if not already running)
 # Check: Docker icon in system tray should show "running"
 
