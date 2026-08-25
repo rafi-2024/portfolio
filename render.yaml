@@ -19,8 +19,35 @@ services:
         fromDatabase:
           name: personalwebsite-db
           property: connectionString
+      # Points at the internal n8n private service below (not publicly reachable)
       - key: N8N_WEBHOOK_URL
-        sync: false
+        value: http://n8n:5678/webhook/contact-form
+  # n8n workflow automation (email notifications on contact form submit).
+  # Private service: only reachable inside Render's network by the web app.
+  - type: pserv
+    name: n8n
+    runtime: docker
+    plan: starter
+    branch: main
+    image:
+      url: docker.io/n8nio/n8n:latest
+    envVars:
+      - key: N8N_PORT
+        value: "5678"
+      - key: N8N_PROTOCOL
+        value: http
+      - key: N8N_HOST
+        value: n8n
+      - key: WEBHOOK_URL
+        sync: false   # set in dashboard to your public app URL if n8n must call out
+      - key: GENERIC_TIMEZONE
+        value: UTC
+      - key: N8N_BASIC_AUTH_ACTIVE
+        value: "true"
+      - key: N8N_BASIC_AUTH_USER
+        sync: false   # set in Render dashboard
+      - key: N8N_BASIC_AUTH_PASSWORD
+        sync: false   # set in Render dashboard (secret)
 
 databases:
   - name: personalwebsite-db
