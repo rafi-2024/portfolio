@@ -2,12 +2,12 @@ services:
   - type: web
     name: personalwebsite
     runtime: docker
-    plan: starter
+    plan: free
+    branch: main
     dockerfilePath: ./Dockerfile
     dockerContext: .
-    preDeployCommand: ./node_modules/.bin/prisma migrate deploy
     healthCheckPath: /api/health
-    autoDeployTrigger: commit
+    autoDeployTrigger: checksPass
     envVars:
       - key: NODE_ENV
         value: production
@@ -24,7 +24,7 @@ services:
 
 databases:
   - name: personalwebsite-db
-    plan: basic-256mb
+    plan: free
     databaseName: portfolio_db
     user: portfolio_user
     postgresMajorVersion: "16"

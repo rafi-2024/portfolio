@@ -268,6 +268,34 @@ server {
 }
 ```
 
+### Render Free-Tier Deployment
+
+The repository includes a Render Blueprint in [`render.yaml`](../render.yaml).
+It defines a Docker web service and a Free Render Postgres database.
+
+1. Push the repository to GitHub with the deployment branch named `main`.
+2. In the Render Dashboard, create a new Blueprint and select this repository.
+3. Review `render.yaml` and choose the Free instance for both the web service and
+  Postgres database.
+4. Enter `N8N_WEBHOOK_URL` when Render prompts for the secret value. Do not commit
+  this value to the repository.
+5. Confirm the service is linked to `main` and set Auto-Deploy to **After CI Checks
+  Pass**.
+6. Push to `main`. GitHub Actions runs `npm ci`, `npm run lint`, and `npm run build`;
+  Render deploys only after those checks pass.
+7. Verify the deployment at `https://<service>.onrender.com/api/health` and then
+  test the contact form.
+
+Free web services sleep after 15 minutes without traffic and may take about one
+minute to wake. Their filesystem is ephemeral, so this app stores durable contact
+data in Postgres. Free Postgres is limited to 1 GB, has no backups or connection
+pooling, and expires 30 days after creation; export or upgrade the database before
+that deadline for anything beyond a temporary evaluation.
+
+Free web services do not support Render's `preDeployCommand`. The Docker startup
+command therefore runs `prisma migrate deploy` before starting Next.js. Keep Prisma
+migrations backwards-compatible and never use `prisma db push` in this deployment.
+
 ---
 
 ## Database Management
