@@ -5,14 +5,16 @@ import { defineConfig } from "prisma/config";
 import * as path from "path";
 
 // Load environment files in order of precedence
+// (local dev convenience only; in CI/production DATABASE_URL is injected)
 dotenv.config({ path: path.resolve(process.cwd(), ".env.local") });
 dotenv.config({ path: path.resolve(process.cwd(), ".env") });
 
-const databaseUrl = process.env["DATABASE_URL"];
-
-if (!databaseUrl) {
-  throw new Error("DATABASE_URL is required to run Prisma.");
-}
+// `prisma generate` (including @prisma/client's postinstall hook during
+// `npm ci`) loads this config but does NOT need a reachable database.
+// Throwing here broke CI and Docker builds where DATABASE_URL isn't set yet.
+// Only `migrate` commands require a real URL, and they validate themselves.
+const databaseUrl =
+  process.env["DATABASE_URL"] ?? "postgresql://placeholder:placeholder@localhost:5432/placeholder";
 
 export default defineConfig({
   schema: "prisma/schema.prisma",
