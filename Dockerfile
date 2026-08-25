@@ -83,4 +83,7 @@ ENV HOSTNAME="0.0.0.0"
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
   CMD curl -f "http://localhost:${PORT:-3000}/api/health" || exit 1
 
-CMD ["sh", "-c", "node -e \"const u=new URL(process.env.DATABASE_URL||''); if(u.protocol!=='postgresql:'&&u.protocol!=='postgres:') throw new Error('DATABASE_URL has invalid protocol: '+u.protocol); if(!u.port) throw new Error('DATABASE_URL has missing/invalid port — check for stray quotes or unencoded characters in the Render env var'); console.log('DATABASE_URL OK:', u.hostname+':'+u.port+'/'+(u.pathname||'').slice(1))\" && ./node_modules/.bin/prisma migrate deploy && exec node server.js"]
+# Sanitize DATABASE_URL (strip stray quotes / CR chars that break URL parsing
+# when the value is pasted into the Render dashboard), validate it, then run
+# migrations and start the server.
+CMD ["sh", "-c", "DATABASE_URL=$(printf '%s' \"$DATABASE_URL\" | tr -d '\"' | tr -d '\r'); export DATABASE_URL; node -e \"const u=new URL(process.env.DATABASE_URL||''); if(u.protocol!=='postgresql:'&&u.protocol!=='postgres:') throw new Error('DATABASE_URL invalid protocol: '+u.protocol); if(!u.port) throw new Error('DATABASE_URL missing/invalid port - check quotes/unencoded chars'); console.log('DATABASE_URL OK:', u.hostname+':'+u.port)\" && ./node_modules/.bin/prisma migrate deploy && exec node server.js"]
