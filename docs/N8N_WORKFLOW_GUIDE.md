@@ -8,6 +8,26 @@ This guide explains how to set up the n8n workflow to handle contact form submis
 - UI navigation is now path-based (for example: `/about`, `/services`, `/contact`) instead of hash navigation.
 - This routing change does not alter webhook behavior as long as `N8N_WEBHOOK_URL` is configured correctly.
 
+## How the Connections Work
+
+The contact request follows this path:
+
+1. The browser sends the form to the Next.js app at `/api/contact`.
+2. The app saves the message in the Render Postgres database through `DATABASE_URL`.
+3. The app sends the saved message to n8n using `N8N_WEBHOOK_URL`.
+4. n8n runs the workflow and sends the email notification.
+
+These variables have different jobs:
+
+| Variable | Used by | Meaning |
+| --- | --- | --- |
+| `DATABASE_URL` | Next.js and Prisma | Render Postgres connection string; supplied by `render.yaml` |
+| `N8N_WEBHOOK_URL` | Next.js app | Full webhook endpoint the app calls, ending in `/webhook/contact-form` |
+| `N8N_PUBLIC_WEBHOOK_URL` | Local production Docker Compose | Public base URL n8n advertises in generated webhook URLs; Compose maps it to n8n's `WEBHOOK_URL` |
+
+`N8N_WEBHOOK_URL` must point to n8n, not to the portfolio app. For example, a
+Render setup uses `https://<n8n-service>.onrender.com/webhook/contact-form`.
+
 ## Prerequisites
 
 - Docker and Docker Compose installed
@@ -56,8 +76,10 @@ docker compose --env-file .env.production -f docker-compose.prod.yml up -d
    - **Response Mode**: `Last Node`
    - **Response Data**: `First Entry JSON`
 
-4. The webhook URL will be: `http://localhost:5678/webhook/contact-form`
-5. Make sure this matches your `.env.local` or `.env.production` `N8N_WEBHOOK_URL`
+4. The local webhook URL is `http://localhost:5678/webhook/contact-form`.
+5. In Docker Compose, the app reaches n8n internally at
+   `http://n8n:5678/webhook/contact-form`; this is the value of `N8N_WEBHOOK_URL`
+   inside the app container.
 
 ### 3.3. Add Email Send Node
 
@@ -168,6 +190,58 @@ curl -X POST http://localhost:5678/webhook/contact-form \
 2. Select **"Export"**
 3. Save the JSON file to: `n8n-workflows/contact-form-notification.json`
 4. Commit to your repository
+
+## Render Setup
+
+### Recommended architecture
+
+Keep the portfolio app and n8n as separate services:
+
+```text
+Browser -> portfolio web service -> Render Postgres
+                              \-> n8n webhook service -> email provider
+```
+
+The existing [`render.yaml`](../render.yaml) provisions the portfolio app and its
+Postgres database. It does not provision n8n because n8n needs durable workflow
+storage and credentials. The simplest reliable option is n8n Cloud or another
+managed n8n host. A separate Render n8n service can be used for testing, but a
+Free Render service has an ephemeral filesystem and can lose n8n data after a
+restart or redeploy.
+
+### Connect a separately hosted n8n instance
+
+1. Deploy n8n on n8n Cloud, a persistent Render setup, or another HTTPS host.
+2. Configure n8n's public URL so generated webhook URLs use its HTTPS hostname.
+   For a Docker deployment, this is n8n's `WEBHOOK_URL`, for example
+   `https://<n8n-service>.onrender.com/`.
+3. Create the Webhook node with `POST` and path `contact-form`, then activate the
+   workflow. The production endpoint becomes
+   `https://<n8n-service>.onrender.com/webhook/contact-form`.
+4. In the Render Dashboard for `personalwebsite`, set the secret
+   `N8N_WEBHOOK_URL` to that full endpoint. Do not put the value in Git or in
+   `render.yaml`.
+5. Confirm `DATABASE_URL` is supplied by the `personalwebsite-db` reference in
+   `render.yaml`. The app writes to this database before calling n8n.
+6. Submit a real contact form and verify the database row, the n8n execution, and
+   the email in that order.
+
+### Optional n8n database
+
+n8n does not need direct access to the portfolio tables. It receives the saved
+contact payload from the app. If n8n needs its own execution history or user
+data, configure a separate persistent database for n8n; do not point n8n at the
+portfolio schema. A Free Render Postgres database is limited to 1 GB, has no
+backups, and expires after 30 days, so it is not a durable n8n database choice.
+
+### Render verification checklist
+
+- `N8N_WEBHOOK_URL` points to the n8n hostname, never `portfolio-o0m8.onrender.com`.
+- The n8n Webhook node is **Active**, not only in test/listening mode.
+- The Render app health check passes at `/api/health`.
+- The contact row exists in Render Postgres before checking n8n.
+- n8n receives a `201`-style successful webhook request and the email node succeeds.
+- Free services may sleep; allow about a minute for the first request after inactivity.
 
 ## Advanced Configuration
 
