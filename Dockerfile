@@ -61,11 +61,12 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 
-# Copy Prisma generated client and schema
-COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
-COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
-COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
-COPY --from=builder /app/node_modules/.bin ./node_modules/.bin
+# Copy ALL node_modules from builder.
+# The Prisma CLI (@prisma/config) has transitive runtime deps (effect, c12,
+# deepmerge-ts, empathic, ...) that cannot be cherry-picked safely — copying
+# only @prisma/prisma/.bin caused "Cannot find module 'effect'" on Render's
+# pre-deploy `prisma migrate deploy`.
+COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/prisma ./prisma
 
 # Set ownership
